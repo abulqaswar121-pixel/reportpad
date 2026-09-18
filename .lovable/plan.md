@@ -1,29 +1,55 @@
-# NDH E-store launch readiness
+# NDH E-store go-live order
 
-## Confirmed built
-- Marketing site with home, features, pricing, about, resources, contact, legal, sign-in, sign-up, password reset, and call-booking pages.
-- Vendor onboarding with store name, unique shop address, business category, WhatsApp contact, description, and storefront design settings.
-- Vendor dashboard with overview, products, orders, design settings, marketing/Meta tools, logistics, billing, ledger, and payout areas.
-- Public vendor storefronts with product pages, variants, cart, delivery zones, digital/service/booking product types, WhatsApp checkout, and payment checkout paths.
-- Nigerian payment path through Paystack and international payment path through Flutterwave, including signed webhooks and return verification.
-- Vendor stock/product management, order fulfilment states, delivery zones, cargo profiles, payout accounts, payout requests, and payment/email event records.
-- Transactional email templates and a protected email-dispatch endpoint.
-- Meta catalogue feed, Pixel/Conversions API settings, server-side commerce event hooks, and customer-care UI.
-- Lovable Cloud backend is responding normally, and the repository includes the E-store migrations and generated integrations.
+## Goal
+Take the current NDH E-store from its existing codebase to a tested public launch, then connect the user’s custom domain last.
 
-## Launch blockers and connections
-1. Apply or reconcile the E-store database migrations in Lovable Cloud. The live database currently exposes the former school-report tables, while the app queries E-store tables such as `vendors`, `products`, `orders`, and `payouts`.
-2. Configure and verify the production payment credentials and callback/webhook URLs for Paystack; add and verify Flutterwave credentials if international checkout is required.
-3. Configure Resend API access, the sender address/domain, and the protected email-dispatch schedule. The code is ready, but the required email variables were not found in the current secret inventory.
-4. Configure production app URL values so password reset, payment returns, catalogue feeds, and public links use the live NDH domain rather than local fallbacks.
-5. Decide whether Stripe is part of launch. The current application code uses Paystack and Flutterwave checkout; the existing Stripe test secret is not enough to claim a live Stripe flow.
-6. Configure Meta Pixel/CAPI per vendor after launch; the dashboard connection is built, but each merchant supplies their own IDs and access token.
-7. Add PWA/offline support only if it remains a launch requirement. No service-worker or install manifest wiring is currently present.
-8. Add route-specific SEO metadata and social tags for the public pages before launch; currently only the shared root metadata is defined.
-9. Run authenticated smoke tests after the database is reconciled: sign up, onboard a vendor, create a product, publish a store, place a test order, verify payment, process the order, send email, and request a payout.
+## Verified starting point
+- The NDH E-store pages, vendor dashboard, storefront, product management, order management, shipping, payouts, payment return flows, webhooks, email queue, and Meta tools are present in the repository.
+- TanStack Start file-based routing is already in place under `src/routes/`.
+- Lovable Cloud is responding normally.
+- The live database currently contains the former school-report tables, while this app requires the NDH commerce schema (`vendors`, `products`, `orders`, `payouts`, payment events, and related functions).
+- The build now includes the required `build:dev` script.
+- Offline/PWA wiring and route-specific SEO metadata are not currently present.
 
-## Technical details
-- Preserve TanStack Start file-based routing under `src/routes/`.
-- Keep generated route and Supabase integration files managed by the platform.
-- Do not bring back the former school-report routes, tables, or feature assumptions.
-- Keep the existing `build:dev` script fix.
+## Order of work
+1. **Make the commerce database match the app**
+   - Apply the existing NDH migrations through the database migration workflow.
+   - Confirm tables, functions, grants, RLS, storage buckets, and payment/email event tables.
+   - Resolve or document security-linter findings that affect launch.
+
+2. **Connect production services**
+   - Set the production app URL used by auth links, payment callbacks, feeds, and emails.
+   - Verify Paystack credentials and webhook delivery for Nigerian payments.
+   - Add Flutterwave credentials and webhook settings if international checkout is part of the first launch.
+   - Configure Resend and the sender domain for transactional email delivery.
+   - Keep Stripe out of the first launch unless a live Stripe checkout is explicitly required; the current code does not establish a complete Stripe flow.
+
+3. **Run a real end-to-end test**
+   - Create a test vendor account.
+   - Complete onboarding and create a store.
+   - Add products and delivery zones.
+   - Open the public storefront and place a test order.
+   - Verify the payment return and webhook, then move the order through fulfilment.
+   - Confirm customer/vendor emails, stock changes, and payout-account validation.
+
+4. **Close launch polish items**
+   - Add route-specific page titles and descriptions for public pages.
+   - Decide whether offline/PWA support is required for launch; if yes, add the install manifest and service worker before publishing.
+   - Confirm legal copy, support contacts, pricing, and the final NDH brand wording.
+
+5. **Publish the stable app**
+   - Run the final security check.
+   - Publish the tested build to the Lovable URL.
+   - Re-test sign-in, onboarding, storefront, checkout, payment callback, and webhooks on the published URL.
+
+6. **Connect the custom domain last**
+   - Add the root domain and `www` domain in Project Settings → Domains.
+   - Complete the DNS verification Lovable provides.
+   - Wait for SSL and DNS verification, then set the preferred domain as primary.
+   - Re-test auth redirects, payment callbacks, email links, catalogue feeds, and storefront links on the custom domain.
+
+## Technical boundaries
+- Use the existing TanStack Start route architecture; do not introduce another router.
+- Use the database migration workflow for all schema changes.
+- Keep service credentials in secure project secrets, never in committed files or chat.
+- Do not restore the former school-report routes or schema as part of this launch.
