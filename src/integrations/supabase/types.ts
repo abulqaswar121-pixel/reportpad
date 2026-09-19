@@ -14,6 +14,103 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_slots: {
+        Row: {
+          active: boolean
+          capacity: number
+          created_at: string
+          ends_at: string
+          id: string
+          product_id: string
+          reserved_count: number
+          starts_at: string
+        }
+        Insert: {
+          active?: boolean
+          capacity: number
+          created_at?: string
+          ends_at: string
+          id?: string
+          product_id: string
+          reserved_count?: number
+          starts_at: string
+        }
+        Update: {
+          active?: boolean
+          capacity?: number
+          created_at?: string
+          ends_at?: string
+          id?: string
+          product_id?: string
+          reserved_count?: number
+          starts_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_slots_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cargo_profiles: {
+        Row: {
+          active: boolean
+          created_at: string
+          currency: string
+          destination_country: string
+          id: string
+          metric: string
+          minimum_charge: number
+          name: string
+          origin_country: string
+          rate: number
+          transport_mode: string
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          destination_country: string
+          id?: string
+          metric: string
+          minimum_charge?: number
+          name: string
+          origin_country?: string
+          rate: number
+          transport_mode: string
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          destination_country?: string
+          id?: string
+          metric?: string
+          minimum_charge?: number
+          name?: string
+          origin_country?: string
+          rate?: number
+          transport_mode?: string
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cargo_profiles_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       class_teachers: {
         Row: {
           class_id: string
@@ -349,6 +446,430 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_id: string | null
+          product_name: string
+          quantity: number
+          total_price: number | null
+          unit_price: number
+          variant_description: string | null
+          variant_id: string | null
+          weight_kg: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_id?: string | null
+          product_name: string
+          quantity: number
+          total_price?: number | null
+          unit_price: number
+          variant_description?: string | null
+          variant_id?: string | null
+          weight_kg?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string | null
+          product_name?: string
+          quantity?: number
+          total_price?: number | null
+          unit_price?: number
+          variant_description?: string | null
+          variant_id?: string | null
+          weight_kg?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_id: string | null
+          customer_name: string
+          customer_note: string | null
+          customer_phone: string | null
+          delivery_zone_id: string | null
+          id: string
+          metadata: Json
+          order_number: number
+          paid_at: string | null
+          payment_processing_fee: number
+          payment_provider:
+            | Database["public"]["Enums"]["payment_provider"]
+            | null
+          payment_reference: string | null
+          platform_fee: number
+          shipping_address: Json | null
+          shipping_fee: number
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          customer_email: string
+          customer_id?: string | null
+          customer_name: string
+          customer_note?: string | null
+          customer_phone?: string | null
+          delivery_zone_id?: string | null
+          id?: string
+          metadata?: Json
+          order_number?: never
+          paid_at?: string | null
+          payment_processing_fee?: number
+          payment_provider?:
+            | Database["public"]["Enums"]["payment_provider"]
+            | null
+          payment_reference?: string | null
+          platform_fee?: number
+          shipping_address?: Json | null
+          shipping_fee?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          customer_id?: string | null
+          customer_name?: string
+          customer_note?: string | null
+          customer_phone?: string | null
+          delivery_zone_id?: string | null
+          id?: string
+          metadata?: Json
+          order_number?: never
+          paid_at?: string | null
+          payment_processing_fee?: number
+          payment_provider?:
+            | Database["public"]["Enums"]["payment_provider"]
+            | null
+          payment_reference?: string | null
+          platform_fee?: number
+          shipping_address?: Json | null
+          shipping_fee?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_delivery_zone_id_fkey"
+            columns: ["delivery_zone_id"]
+            isOneToOne: false
+            referencedRelation: "shipping_zones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payouts: {
+        Row: {
+          amount: number
+          bank_account_snapshot: Json
+          created_at: string
+          currency: string
+          failure_reason: string | null
+          id: string
+          processed_at: string | null
+          provider_reference: string | null
+          requested_at: string
+          status: Database["public"]["Enums"]["payout_status"]
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          amount: number
+          bank_account_snapshot: Json
+          created_at?: string
+          currency?: string
+          failure_reason?: string | null
+          id?: string
+          processed_at?: string | null
+          provider_reference?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["payout_status"]
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          amount?: number
+          bank_account_snapshot?: Json
+          created_at?: string
+          currency?: string
+          failure_reason?: string | null
+          id?: string
+          processed_at?: string | null
+          provider_reference?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["payout_status"]
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payouts_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_variants: {
+        Row: {
+          attributes: Json
+          created_at: string
+          id: string
+          price_modifier: number
+          product_id: string
+          sku: string | null
+          stock_count: number
+          updated_at: string
+          variant_name: string
+          variant_value: string
+        }
+        Insert: {
+          attributes?: Json
+          created_at?: string
+          id?: string
+          price_modifier?: number
+          product_id: string
+          sku?: string | null
+          stock_count?: number
+          updated_at?: string
+          variant_name: string
+          variant_value: string
+        }
+        Update: {
+          attributes?: Json
+          created_at?: string
+          id?: string
+          price_modifier?: number
+          product_id?: string
+          sku?: string | null
+          stock_count?: number
+          updated_at?: string
+          variant_name?: string
+          variant_value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          allocation_threshold: number | null
+          base_price: number
+          category: string
+          compare_at_price: number | null
+          created_at: string
+          description: string
+          digital_file_path: string | null
+          id: string
+          image_url: string
+          image_urls: Json
+          is_active: boolean
+          is_featured: boolean
+          metadata: Json
+          name: string
+          product_type: Database["public"]["Enums"]["product_type"]
+          slug: string
+          stock_count: number
+          updated_at: string
+          vendor_id: string
+          volume_cbm: number
+          weight_kg: number
+        }
+        Insert: {
+          allocation_threshold?: number | null
+          base_price: number
+          category?: string
+          compare_at_price?: number | null
+          created_at?: string
+          description?: string
+          digital_file_path?: string | null
+          id?: string
+          image_url?: string
+          image_urls?: Json
+          is_active?: boolean
+          is_featured?: boolean
+          metadata?: Json
+          name: string
+          product_type?: Database["public"]["Enums"]["product_type"]
+          slug: string
+          stock_count?: number
+          updated_at?: string
+          vendor_id: string
+          volume_cbm?: number
+          weight_kg?: number
+        }
+        Update: {
+          allocation_threshold?: number | null
+          base_price?: number
+          category?: string
+          compare_at_price?: number | null
+          created_at?: string
+          description?: string
+          digital_file_path?: string | null
+          id?: string
+          image_url?: string
+          image_urls?: Json
+          is_active?: boolean
+          is_featured?: boolean
+          metadata?: Json
+          name?: string
+          product_type?: Database["public"]["Enums"]["product_type"]
+          slug?: string
+          stock_count?: number
+          updated_at?: string
+          vendor_id?: string
+          volume_cbm?: number
+          weight_kg?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          body: string
+          created_at: string
+          customer_id: string | null
+          customer_name: string
+          id: string
+          is_published: boolean
+          is_verified: boolean
+          order_id: string | null
+          product_id: string
+          rating: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          customer_id?: string | null
+          customer_name: string
+          id?: string
+          is_published?: boolean
+          is_verified?: boolean
+          order_id?: string | null
+          product_id: string
+          rating: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          customer_id?: string | null
+          customer_name?: string
+          id?: string
+          is_published?: boolean
+          is_verified?: boolean
+          order_id?: string | null
+          product_id?: string
+          rating?: number
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       schools: {
         Row: {
           access_code: string | null
@@ -450,6 +971,56 @@ export type Database = {
           },
         ]
       }
+      shipping_zones: {
+        Row: {
+          active: boolean
+          country_code: string
+          created_at: string
+          estimated_days_max: number | null
+          estimated_days_min: number | null
+          fee: number
+          id: string
+          state: string
+          updated_at: string
+          vendor_id: string
+          zone_name: string
+        }
+        Insert: {
+          active?: boolean
+          country_code?: string
+          created_at?: string
+          estimated_days_max?: number | null
+          estimated_days_min?: number | null
+          fee: number
+          id?: string
+          state: string
+          updated_at?: string
+          vendor_id: string
+          zone_name: string
+        }
+        Update: {
+          active?: boolean
+          country_code?: string
+          created_at?: string
+          estimated_days_max?: number | null
+          estimated_days_min?: number | null
+          fee?: number
+          id?: string
+          state?: string
+          updated_at?: string
+          vendor_id?: string
+          zone_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipping_zones_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       students: {
         Row: {
           admission_no: string | null
@@ -487,6 +1058,47 @@ export type Database = {
             columns: ["class_id"]
             isOneToOne: false
             referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_events: {
+        Row: {
+          amount: number | null
+          created_at: string
+          event_type: string
+          id: string
+          payload: Json
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_reference: string
+          vendor_id: string
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          event_type: string
+          id?: string
+          payload?: Json
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_reference: string
+          vendor_id: string
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          provider_reference?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_events_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
             referencedColumns: ["id"]
           },
         ]
@@ -631,12 +1243,177 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone_number: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email: string
+          full_name?: string
+          id: string
+          phone_number?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone_number?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      vendors: {
+        Row: {
+          address: Json
+          billing_cycle: Database["public"]["Enums"]["billing_cycle"]
+          business_category: Database["public"]["Enums"]["vendor_archetype"]
+          business_description: string
+          business_name: string
+          created_at: string
+          current_period_end: string
+          default_currency: string
+          design_settings: Json
+          email: string
+          id: string
+          meta_capi_token_encrypted: string | null
+          meta_pixel_id: string | null
+          owner_user_id: string
+          platform_fee_percentage: number
+          published: boolean
+          seo_description: string | null
+          seo_title: string | null
+          shop_slug: string
+          social_links: Json
+          subscription_status: Database["public"]["Enums"]["subscription_status"]
+          subscription_tier: Database["public"]["Enums"]["subscription_tier"]
+          support_email: string | null
+          timezone: string
+          trial_end_date: string
+          updated_at: string
+          whatsapp_number: string
+        }
+        Insert: {
+          address?: Json
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          business_category: Database["public"]["Enums"]["vendor_archetype"]
+          business_description?: string
+          business_name: string
+          created_at?: string
+          current_period_end?: string
+          default_currency?: string
+          design_settings?: Json
+          email: string
+          id?: string
+          meta_capi_token_encrypted?: string | null
+          meta_pixel_id?: string | null
+          owner_user_id: string
+          platform_fee_percentage?: number
+          published?: boolean
+          seo_description?: string | null
+          seo_title?: string | null
+          shop_slug: string
+          social_links?: Json
+          subscription_status?: Database["public"]["Enums"]["subscription_status"]
+          subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
+          support_email?: string | null
+          timezone?: string
+          trial_end_date?: string
+          updated_at?: string
+          whatsapp_number: string
+        }
+        Update: {
+          address?: Json
+          billing_cycle?: Database["public"]["Enums"]["billing_cycle"]
+          business_category?: Database["public"]["Enums"]["vendor_archetype"]
+          business_description?: string
+          business_name?: string
+          created_at?: string
+          current_period_end?: string
+          default_currency?: string
+          design_settings?: Json
+          email?: string
+          id?: string
+          meta_capi_token_encrypted?: string | null
+          meta_pixel_id?: string | null
+          owner_user_id?: string
+          platform_fee_percentage?: number
+          published?: boolean
+          seo_description?: string | null
+          seo_title?: string | null
+          shop_slug?: string
+          social_links?: Json
+          subscription_status?: Database["public"]["Enums"]["subscription_status"]
+          subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
+          support_email?: string | null
+          timezone?: string
+          trial_end_date?: string
+          updated_at?: string
+          whatsapp_number?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vendors_owner_user_id_fkey"
+            columns: ["owner_user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      has_role: {
+        Args: {
+          requested_role: Database["public"]["Enums"]["app_role"]
+          requested_user_id: string
+        }
+        Returns: boolean
+      }
       hash_secret: { Args: { _plain: string }; Returns: string }
+      is_admin: { Args: never; Returns: boolean }
       is_class_school_owner: { Args: { _class_id: string }; Returns: boolean }
       is_class_teacher: { Args: { _class_id: string }; Returns: boolean }
       is_school_owner: { Args: { _school_id: string }; Returns: boolean }
@@ -652,7 +1429,42 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "vendor" | "customer"
+      billing_cycle: "monthly" | "yearly"
+      order_status:
+        | "pending"
+        | "awaiting_payment"
+        | "paid"
+        | "processing"
+        | "fulfilled"
+        | "cancelled"
+        | "refunded"
+      payment_provider:
+        | "paystack"
+        | "flutterwave"
+        | "stripe"
+        | "bank_transfer"
+        | "whatsapp"
+      payout_status:
+        | "requested"
+        | "processing"
+        | "paid"
+        | "failed"
+        | "cancelled"
+      product_type: "physical" | "booking" | "service" | "digital"
+      subscription_status: "trial" | "active" | "past_due" | "expired"
+      subscription_tier: "starter" | "pro" | "global_enterprise"
+      vendor_archetype:
+        | "wigs_fashion"
+        | "marketplace"
+        | "grocery_food"
+        | "wholesale_pod"
+        | "cargo_logistics"
+        | "travel_tours"
+        | "freelance_services"
+        | "event_ticketing"
+        | "digital_products"
+        | "rentals_subscriptions"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -779,6 +1591,41 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "vendor", "customer"],
+      billing_cycle: ["monthly", "yearly"],
+      order_status: [
+        "pending",
+        "awaiting_payment",
+        "paid",
+        "processing",
+        "fulfilled",
+        "cancelled",
+        "refunded",
+      ],
+      payment_provider: [
+        "paystack",
+        "flutterwave",
+        "stripe",
+        "bank_transfer",
+        "whatsapp",
+      ],
+      payout_status: ["requested", "processing", "paid", "failed", "cancelled"],
+      product_type: ["physical", "booking", "service", "digital"],
+      subscription_status: ["trial", "active", "past_due", "expired"],
+      subscription_tier: ["starter", "pro", "global_enterprise"],
+      vendor_archetype: [
+        "wigs_fashion",
+        "marketplace",
+        "grocery_food",
+        "wholesale_pod",
+        "cargo_logistics",
+        "travel_tours",
+        "freelance_services",
+        "event_ticketing",
+        "digital_products",
+        "rentals_subscriptions",
+      ],
+    },
   },
 } as const
