@@ -232,6 +232,24 @@ export type Database = {
           },
         ]
       }
+      exchange_rates: {
+        Row: {
+          currency: string
+          ngn_per_unit: number
+          updated_at: string
+        }
+        Insert: {
+          currency: string
+          ngn_per_unit: number
+          updated_at?: string
+        }
+        Update: {
+          currency?: string
+          ngn_per_unit?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       grades: {
         Row: {
           ca1: number | null
@@ -512,6 +530,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          checkout_token: string
           created_at: string
           currency: string
           customer_email: string
@@ -539,6 +558,7 @@ export type Database = {
           vendor_id: string
         }
         Insert: {
+          checkout_token?: string
           created_at?: string
           currency?: string
           customer_email: string
@@ -566,6 +586,7 @@ export type Database = {
           vendor_id: string
         }
         Update: {
+          checkout_token?: string
           created_at?: string
           currency?: string
           customer_email?: string
@@ -1405,6 +1426,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_storefront_order: {
+        Args: {
+          customer: Json
+          destination: Json
+          requested_checkout_token: string
+          requested_items: Json
+          requested_provider: Database["public"]["Enums"]["payment_provider"]
+          requested_vendor_slug: string
+          requested_zone_id: string
+        }
+        Returns: Json
+      }
       has_role: {
         Args: {
           requested_role: Database["public"]["Enums"]["app_role"]
