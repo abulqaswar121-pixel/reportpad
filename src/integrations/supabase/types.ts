@@ -637,6 +637,53 @@ export type Database = {
           },
         ]
       }
+      payment_events: {
+        Row: {
+          event_type: string
+          id: string
+          order_id: string | null
+          payload: Json
+          processed: boolean
+          processed_at: string | null
+          processing_error: string | null
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id: string
+          received_at: string
+        }
+        Insert: {
+          event_type: string
+          id?: string
+          order_id?: string | null
+          payload: Json
+          processed?: boolean
+          processed_at?: string | null
+          processing_error?: string | null
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id: string
+          received_at?: string
+        }
+        Update: {
+          event_type?: string
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          processed?: boolean
+          processed_at?: string | null
+          processing_error?: string | null
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id?: string
+          received_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payouts: {
         Row: {
           amount: number
@@ -1455,6 +1502,14 @@ export type Database = {
         Returns: boolean
       }
       is_student_teacher: { Args: { _student_id: string }; Returns: boolean }
+      mark_order_paid: {
+        Args: {
+          paid_payload: Json
+          provider_reference: string
+          target_order_id: string
+        }
+        Returns: boolean
+      }
       replace_product_variants: {
         Args: { target_product_id: string; variants: Json }
         Returns: undefined
