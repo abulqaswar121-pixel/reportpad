@@ -232,6 +232,24 @@ export type Database = {
           },
         ]
       }
+      exchange_rates: {
+        Row: {
+          currency: string
+          ngn_per_unit: number
+          updated_at: string
+        }
+        Insert: {
+          currency: string
+          ngn_per_unit: number
+          updated_at?: string
+        }
+        Update: {
+          currency?: string
+          ngn_per_unit?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       grades: {
         Row: {
           ca1: number | null
@@ -510,8 +528,54 @@ export type Database = {
           },
         ]
       }
+      order_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          from_status: Database["public"]["Enums"]["order_status"] | null
+          id: string
+          note: string | null
+          order_id: string
+          to_status: Database["public"]["Enums"]["order_status"]
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["order_status"] | null
+          id?: string
+          note?: string | null
+          order_id: string
+          to_status: Database["public"]["Enums"]["order_status"]
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["order_status"] | null
+          id?: string
+          note?: string | null
+          order_id?: string
+          to_status?: Database["public"]["Enums"]["order_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_status_history_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_status_history_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
+          checkout_token: string
           created_at: string
           currency: string
           customer_email: string
@@ -539,6 +603,7 @@ export type Database = {
           vendor_id: string
         }
         Insert: {
+          checkout_token?: string
           created_at?: string
           currency?: string
           customer_email: string
@@ -566,6 +631,7 @@ export type Database = {
           vendor_id: string
         }
         Update: {
+          checkout_token?: string
           created_at?: string
           currency?: string
           customer_email?: string
@@ -612,6 +678,53 @@ export type Database = {
             columns: ["vendor_id"]
             isOneToOne: false
             referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_events: {
+        Row: {
+          event_type: string
+          id: string
+          order_id: string | null
+          payload: Json
+          processed: boolean
+          processed_at: string | null
+          processing_error: string | null
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id: string
+          received_at: string
+        }
+        Insert: {
+          event_type: string
+          id?: string
+          order_id?: string | null
+          payload: Json
+          processed?: boolean
+          processed_at?: string | null
+          processing_error?: string | null
+          provider: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id: string
+          received_at?: string
+        }
+        Update: {
+          event_type?: string
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          processed?: boolean
+          processed_at?: string | null
+          processing_error?: string | null
+          provider?: Database["public"]["Enums"]["payment_provider"]
+          provider_event_id?: string
+          received_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
             referencedColumns: ["id"]
           },
         ]
@@ -1405,6 +1518,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_storefront_order: {
+        Args: {
+          customer: Json
+          destination: Json
+          requested_checkout_token: string
+          requested_items: Json
+          requested_provider: Database["public"]["Enums"]["payment_provider"]
+          requested_vendor_slug: string
+          requested_zone_id: string
+        }
+        Returns: Json
+      }
       has_role: {
         Args: {
           requested_role: Database["public"]["Enums"]["app_role"]
@@ -1422,7 +1547,60 @@ export type Database = {
         Returns: boolean
       }
       is_student_teacher: { Args: { _student_id: string }; Returns: boolean }
+      mark_order_paid: {
+        Args: {
+          paid_payload: Json
+          provider_reference: string
+          target_order_id: string
+        }
+        Returns: boolean
+      }
+      replace_product_variants: {
+        Args: { target_product_id: string; variants: Json }
+        Returns: undefined
+      }
       user_is_school_member: { Args: { _school_id: string }; Returns: boolean }
+      vendor_transition_order: {
+        Args: {
+          new_status: Database["public"]["Enums"]["order_status"]
+          note?: string
+          target_order_id: string
+        }
+        Returns: {
+          checkout_token: string
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_id: string | null
+          customer_name: string
+          customer_note: string | null
+          customer_phone: string | null
+          delivery_zone_id: string | null
+          id: string
+          metadata: Json
+          order_number: number
+          paid_at: string | null
+          payment_processing_fee: number
+          payment_provider:
+            | Database["public"]["Enums"]["payment_provider"]
+            | null
+          payment_reference: string | null
+          platform_fee: number
+          shipping_address: Json | null
+          shipping_fee: number
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          updated_at: string
+          vendor_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "orders"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       verify_secret: {
         Args: { _hash: string; _plain: string }
         Returns: boolean
