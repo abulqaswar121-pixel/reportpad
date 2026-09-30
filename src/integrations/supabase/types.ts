@@ -1422,6 +1422,10 @@ export type Database = {
         Returns: boolean
       }
       is_student_teacher: { Args: { _student_id: string }; Returns: boolean }
+      replace_product_variants: {
+        Args: { target_product_id: string; variants: Json }
+        Returns: undefined
+      }
       user_is_school_member: { Args: { _school_id: string }; Returns: boolean }
       verify_secret: {
         Args: { _hash: string; _plain: string }
