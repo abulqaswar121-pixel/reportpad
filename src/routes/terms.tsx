@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/terms')({component:()=> <LegalPage kind="terms"/>})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/terms')({head:()=>({meta:pageMeta({title:`Terms of Service | NDH eStore`,description:`The terms governing access to and use of NDH Estore, operated by Najeeb Digital Hub.`})}),component:()=> <LegalPage kind="terms"/>})

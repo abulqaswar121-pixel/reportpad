@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {FeaturesPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/features')({component:FeaturesPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {FeaturesPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/features')({head:()=>({meta:pageMeta({title:`Features — the complete commerce platform | NDH eStore`,description:`Adaptive store design, WhatsApp-native checkout, precision logistics, bookings and growth intelligence in one integrated system.`})}),component:FeaturesPage})

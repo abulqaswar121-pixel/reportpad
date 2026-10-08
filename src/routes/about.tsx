@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {AboutPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/about')({component:AboutPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {AboutPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/about')({head:()=>({meta:pageMeta({title:`About Najeeb Digital Hub | NDH eStore`,description:`NDH eStore is the commerce subsidiary of Najeeb Digital Hub: African ambition with global infrastructure, rooted in Sokoto.`})}),component:AboutPage})

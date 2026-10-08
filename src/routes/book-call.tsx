@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {BookCallPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/book-call')({component:BookCallPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {BookCallPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/book-call')({head:()=>({meta:pageMeta({title:`Book a scoping call | NDH eStore`,description:`Reserve a focused 30-minute conversation about your business model, operations and the right NDH plan.`})}),component:BookCallPage})

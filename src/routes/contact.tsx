@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {ContactPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/contact')({component:ContactPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {ContactPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/contact')({head:()=>({meta:pageMeta({title:`Contact the NDH team | NDH eStore`,description:`Reach Najeeb Digital Hub by email or WhatsApp for sales, onboarding and merchant support.`})}),component:ContactPage})

@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {HelpPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/help')({component:HelpPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {HelpPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/help')({head:()=>({meta:pageMeta({title:`Help centre | NDH eStore`,description:`Setup guidance, selling and fulfilment answers, payment help and store design resources for NDH eStore merchants.`})}),component:HelpPage})

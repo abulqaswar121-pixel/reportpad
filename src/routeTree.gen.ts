@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BookCallRouteImport } from './routes/book-call'
+import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as FeaturesRouteImport } from './routes/features'
@@ -23,6 +24,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TrackRouteImport } from './routes/track'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as PaymentCallbackRouteImport } from './routes/payment/callback'
@@ -46,6 +48,11 @@ const AboutRoute = AboutRouteImport.update({
 const BookCallRoute = BookCallRouteImport.update({
   id: '/book-call',
   path: '/book-call',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogRoute = CatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -103,6 +110,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -155,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-call': typeof BookCallRoute
+  '/catalog': typeof CatalogRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/features': typeof FeaturesRoute
@@ -166,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/store/$vendorSlug': typeof StoreVendorSlugRouteWithChildren
   '/admin/': typeof AdminIndexRoute
@@ -180,6 +194,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-call': typeof BookCallRoute
+  '/catalog': typeof CatalogRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/features': typeof FeaturesRoute
@@ -191,6 +206,7 @@ export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/store/$vendorSlug': typeof StoreVendorSlugRouteWithChildren
   '/admin': typeof AdminIndexRoute
@@ -206,6 +222,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/book-call': typeof BookCallRoute
+  '/catalog': typeof CatalogRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/features': typeof FeaturesRoute
@@ -217,6 +234,7 @@ export interface FileRoutesById {
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/track': typeof TrackRoute
   '/payment/callback': typeof PaymentCallbackRoute
   '/store/$vendorSlug': typeof StoreVendorSlugRouteWithChildren
   '/admin/': typeof AdminIndexRoute
@@ -233,6 +251,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-call'
+    | '/catalog'
     | '/contact'
     | '/cookies'
     | '/features'
@@ -244,6 +263,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/terms'
+    | '/track'
     | '/payment/callback'
     | '/store/$vendorSlug'
     | '/admin/'
@@ -258,6 +278,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-call'
+    | '/catalog'
     | '/contact'
     | '/cookies'
     | '/features'
@@ -269,6 +290,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/terms'
+    | '/track'
     | '/payment/callback'
     | '/store/$vendorSlug'
     | '/admin'
@@ -283,6 +305,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/book-call'
+    | '/catalog'
     | '/contact'
     | '/cookies'
     | '/features'
@@ -294,6 +317,7 @@ export interface FileRouteTypes {
     | '/signin'
     | '/signup'
     | '/terms'
+    | '/track'
     | '/payment/callback'
     | '/store/$vendorSlug'
     | '/admin/'
@@ -309,6 +333,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BookCallRoute: typeof BookCallRoute
+  CatalogRoute: typeof CatalogRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
   FeaturesRoute: typeof FeaturesRoute
@@ -320,6 +345,7 @@ export interface RootRouteChildren {
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
+  TrackRoute: typeof TrackRoute
   PaymentCallbackRoute: typeof PaymentCallbackRoute
   StoreVendorSlugRoute: typeof StoreVendorSlugRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
@@ -350,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/book-call'
       fullPath: '/book-call'
       preLoaderRoute: typeof BookCallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/catalog': {
+      id: '/catalog'
+      path: '/catalog'
+      fullPath: '/catalog'
+      preLoaderRoute: typeof CatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -427,6 +460,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -514,6 +554,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BookCallRoute: BookCallRoute,
+  CatalogRoute: CatalogRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
   FeaturesRoute: FeaturesRoute,
@@ -525,6 +566,7 @@ const rootRouteChildren: RootRouteChildren = {
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
+  TrackRoute: TrackRoute,
   PaymentCallbackRoute: PaymentCallbackRoute,
   StoreVendorSlugRoute: StoreVendorSlugRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,

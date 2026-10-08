@@ -1,7 +1,659 @@
 @import "tailwindcss";
-@theme { --color-background:#f7f8f5; --color-foreground:#10251d; --color-card:#ffffff; --color-card-foreground:#10251d; --color-primary:#143d2e; --color-primary-foreground:#ffffff; --color-secondary:#e8efe9; --color-secondary-foreground:#143d2e; --color-muted:#edf0ec; --color-muted-foreground:#68746f; --color-accent:#d7ff52; --color-accent-foreground:#10251d; --color-border:#dce3dd; --color-destructive:#b42318; --font-sans:"Inter",ui-sans-serif,system-ui,sans-serif; --font-display:"Georgia",serif; --radius-xl:1.25rem; }
-*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--color-background);color:var(--color-foreground);font-family:var(--font-sans);overflow-x:hidden} button,a{transition:all .25s cubic-bezier(.2,.8,.2,1)} button{cursor:pointer} ::selection{background:var(--color-accent);color:var(--color-accent-foreground)}
-.grid-bg{background-image:radial-gradient(circle at 80% 16%,color-mix(in srgb,var(--color-accent) 28%,transparent),transparent 28%),linear-gradient(to right,color-mix(in srgb,var(--color-primary) 8%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in srgb,var(--color-primary) 8%,transparent) 1px,transparent 1px);background-size:auto,40px 40px,40px 40px}.glass{background:color-mix(in srgb,var(--color-card) 84%,transparent);backdrop-filter:blur(18px)}
-@keyframes rise{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}@keyframes marquee{to{transform:translateX(-50%)}}@keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent) 45%,transparent)}50%{box-shadow:0 0 0 12px transparent}}@keyframes testimonial-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}.animate-rise{animation:rise .8s both}.animate-rise-delay{animation:rise .8s .15s both}.animate-float{animation:float 6s ease-in-out infinite}.animate-marquee{animation:marquee 22s linear infinite}.pulse-ring{animation:pulse-ring 2s infinite}.noise{position:relative}.noise:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-@media(max-width:639px){.animate-float{animation:none}.mobile-safe-card{transform:none!important}.mobile-hide-decoration{display:none!important}h1,h2,h3{overflow-wrap:break-word}.glass{backdrop-filter:blur(12px)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+
+/* ============================================================
+   NDH eStore — Porcelain Commerce Canvas
+   Aligned with the Najeeb Digital Hub master design system:
+   daylight porcelain surfaces, hairline structure, deep navy
+   anchors and electric cyan accents.
+   ============================================================ */
+
+@theme {
+  /* canvas */
+  --color-background: #f8fafc;
+  --color-surface: #f1f5f9;
+  --color-surface-2: #e8eef5;
+
+  /* elevated surfaces */
+  --color-card: #ffffff;
+  --color-card-foreground: #070f1e;
+
+  /* ink */
+  --color-foreground: #070f1e;
+  --color-ink-soft: #334155;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+
+  /* structure */
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+
+  /* anchors */
+  --color-primary: #070f1e;
+  --color-primary-foreground: #ffffff;
+  --color-navy: #070f1e;
+  --color-navy-2: #0b192c;
+
+  /* accent */
+  --color-accent: #00e5ff;
+  --color-accent-foreground: #070f1e;
+  --color-cyan: #22d3ee;
+  --color-violet: #8a2be2;
+
+  /* secondary */
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #334155;
+
+  /* semantic status */
+  --color-success: #067647;
+  --color-success-soft: #ecfdf3;
+  --color-warning: #b54708;
+  --color-warning-soft: #fffaeb;
+  --color-info: #175cd3;
+  --color-info-soft: #eff8ff;
+  --color-destructive: #b42318;
+  --color-destructive-soft: #fef3f2;
+
+  /* type */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  /* radii */
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.022em;
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+a {
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-cyan) 30%, transparent);
+  color: var(--color-foreground);
+}
+
+/* ============================================================
+   SURFACES
+   ============================================================ */
+
+/* Hairline-bordered porcelain card — the atomic unit of the canvas. */
+.card-porcelain {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 2px rgba(7, 15, 30, 0.04);
+}
+
+.card-porcelain-lift {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card-porcelain-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 14px 34px -18px rgba(7, 15, 30, 0.22);
+}
+
+/* Deep navy anchor surface with ambient violet glow. */
+.anchor-navy {
+  position: relative;
+  background:
+    radial-gradient(
+      90% 120% at 12% 0%,
+      rgba(138, 43, 226, 0.24),
+      transparent 62%
+    ),
+    radial-gradient(70% 90% at 92% 8%, rgba(0, 229, 255, 0.16), transparent 58%),
+    linear-gradient(160deg, #0b192c 0%, #070f1e 58%, #050a14 100%);
+  color: #fff;
+  overflow: hidden;
+}
+
+.anchor-navy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(80% 70% at 50% 0%, #000 20%, transparent 85%);
+}
+
+.anchor-navy > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Quiet daylight band used to separate discovery sections. */
+.canvas-band {
+  background:
+    linear-gradient(180deg, var(--color-background), var(--color-surface) 60%, var(--color-background));
+}
+
+/* Hairline structure for stat rails and dense data blocks. */
+.hairline-grid {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-card);
+  overflow: hidden;
+}
+
+.hairline-grid > * {
+  border-right: 1px solid var(--color-border);
+}
+
+.hairline-grid > *:last-child {
+  border-right: 0;
+}
+
+@media (max-width: 767px) {
+  .hairline-grid > * {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hairline-grid > *:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* ============================================================
+   CONTROLS
+   ============================================================ */
+
+.field {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.875rem;
+  color: var(--color-foreground);
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.field::placeholder {
+  color: var(--color-muted-foreground);
+}
+
+.field:focus {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
+}
+
+.field-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  font-family: var(--font-display);
+}
+
+/* Quantity stepper used by the cart drawer. */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-card);
+  overflow: hidden;
+}
+
+.stepper button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-ink-soft);
+}
+
+.stepper button:hover:not(:disabled) {
+  background: var(--color-surface);
+  color: var(--color-foreground);
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.stepper output {
+  min-width: 2.25rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   DATA TABLES
+   ============================================================ */
+
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+}
+
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.data-table tbody td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 0.9rem;
+  vertical-align: middle;
+  color: var(--color-ink-soft);
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--color-background);
+}
+
+.data-table .num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Semantic status badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.15rem 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-paid,
+.status-success {
+  background: var(--color-success-soft);
+  border-color: color-mix(in srgb, var(--color-success) 28%, transparent);
+  color: var(--color-success);
+}
+
+.status-pending,
+.status-warning {
+  background: var(--color-warning-soft);
+  border-color: color-mix(in srgb, var(--color-warning) 28%, transparent);
+  color: var(--color-warning);
+}
+
+.status-shipped,
+.status-info {
+  background: var(--color-info-soft);
+  border-color: color-mix(in srgb, var(--color-info) 28%, transparent);
+  color: var(--color-info);
+}
+
+.status-neutral {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-muted-foreground);
+}
+
+.status-danger {
+  background: var(--color-destructive-soft);
+  border-color: color-mix(in srgb, var(--color-destructive) 28%, transparent);
+  color: var(--color-destructive);
+}
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+
+.gateway-symbol {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.gateway-tile {
+  display: grid;
+  place-items: center;
+  border-radius: 30% 30% 30% 8%;
+  background: linear-gradient(145deg, #0b192c, #070f1e);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  box-shadow:
+    0 8px 20px -10px rgba(7, 15, 30, 0.7),
+    inset 0 1px 0 rgba(224, 242, 254, 0.16);
+  overflow: hidden;
+}
+
+.gateway-sector {
+  position: absolute;
+  right: -14%;
+  bottom: -14%;
+  display: grid;
+  place-items: center;
+  width: 48%;
+  height: 48%;
+  border-radius: 30%;
+  background: #ffffff;
+  border: 2px solid #312e81;
+  box-shadow: 0 3px 8px rgba(10, 26, 48, 0.28);
+  color: #0a1a30;
+}
+
+.gateway-sector svg {
+  width: 62%;
+  height: 62%;
+}
+
+.brand-lockup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+
+.brand-lockup .brand-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.brand-lockup .brand-name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-foreground);
+  white-space: nowrap;
+}
+
+.anchor-navy .brand-lockup .brand-eyebrow,
+.on-navy .brand-lockup .brand-eyebrow {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.anchor-navy .brand-lockup .brand-name,
+.on-navy .brand-lockup .brand-name {
+  color: #fff;
+}
+
+/* Electric cyan accent ring used on the assistant avatar. */
+.cyan-ring {
+  box-shadow:
+    0 0 0 2px #070f1e,
+    0 0 0 4px rgba(0, 229, 255, 0.9),
+    0 0 22px -4px rgba(0, 229, 255, 0.65);
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.anchor-navy .eyebrow,
+.on-navy .eyebrow {
+  color: var(--color-cyan);
+}
+
+/* ============================================================
+   MOTION
+   ============================================================ */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.45);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.6s both;
+}
+
+.animate-rise-delay {
+  animation: rise 0.6s 0.12s both;
+}
+
+.animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.pulse-ring {
+  animation: pulse-ring 2.4s infinite;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+.typing-dot {
+  animation: typing 1.2s infinite;
+}
+
+/* Thin scrollbars for dense workspaces. */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+.scroll-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 999px;
+}
+
+/* Hide the horizontal scrollbar on pill rows without losing scroll. */
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================================
+   RESPONSIVE SAFEGUARDS
+   ============================================================ */
+
+@media (max-width: 639px) {
+  body {
+    font-size: 14.5px;
+  }
+
+  .animate-float {
+    animation: none;
+  }
+
+  .mobile-safe-card {
+    transform: none !important;
+  }
+
+  .mobile-hide-decoration {
+    display: none !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

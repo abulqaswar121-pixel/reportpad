@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/privacy')({component:()=> <LegalPage kind="privacy"/>})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/privacy')({head:()=>({meta:pageMeta({title:`Privacy policy | NDH eStore`,description:`How NDH eStore collects, uses and protects personal data across storefronts, checkout and vendor workspaces.`})}),component:()=> <LegalPage kind="privacy"/>})
