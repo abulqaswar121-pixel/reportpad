@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/cookies')({component:()=> <LegalPage kind="cookies"/>})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {LegalPage} from '@/components/marketing/LegalPage';export const Route=createFileRoute('/cookies')({head:()=>({meta:pageMeta({title:`Cookie policy | NDH eStore`,description:`What cookies and local storage NDH eStore uses, including carts, sessions and preference storage.`})}),component:()=> <LegalPage kind="cookies"/>})

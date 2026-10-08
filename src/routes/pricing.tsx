@@ -1,1 +1,2 @@
-import {createFileRoute} from '@tanstack/react-router';import {PricingPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/pricing')({component:PricingPage})
+import {pageMeta} from '@/lib/seo';
+import {createFileRoute} from '@tanstack/react-router';import {PricingPage} from '@/components/marketing/StaticPages';export const Route=createFileRoute('/pricing')({head:()=>({meta:pageMeta({title:`Pricing — simple plans, serious capability | NDH eStore`,description:`Starter, Pro and Global Enterprise plans with a 14-day free trial. Upgrade only when your business needs more power.`})}),component:PricingPage})
