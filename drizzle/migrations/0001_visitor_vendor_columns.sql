@@ -1,0 +1,1 @@
+GRANT SELECT (owner_user_id, meta_pixel_id) ON public.vendors TO anon;

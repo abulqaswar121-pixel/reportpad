@@ -8,6 +8,13 @@
       "when": 1791650757620,
       "tag": "0000_allow_visitor_role_checks",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791650795775,
+      "tag": "0001_visitor_vendor_columns",
+      "breakpoints": true
     }
   ]
 }
