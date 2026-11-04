@@ -1427,6 +1427,7 @@ export type Database = {
           default_currency: string
           design_settings: Json
           email: string
+          grace_period_end: string | null
           id: string
           meta_capi_token_encrypted: string | null
           meta_pixel_id: string | null
@@ -1437,6 +1438,7 @@ export type Database = {
           seo_title: string | null
           shop_slug: string
           social_links: Json
+          subscription_last_checked_at: string | null
           subscription_status: Database["public"]["Enums"]["subscription_status"]
           subscription_tier: Database["public"]["Enums"]["subscription_tier"]
           support_email: string | null
@@ -1456,6 +1458,7 @@ export type Database = {
           default_currency?: string
           design_settings?: Json
           email: string
+          grace_period_end?: string | null
           id?: string
           meta_capi_token_encrypted?: string | null
           meta_pixel_id?: string | null
@@ -1466,6 +1469,7 @@ export type Database = {
           seo_title?: string | null
           shop_slug: string
           social_links?: Json
+          subscription_last_checked_at?: string | null
           subscription_status?: Database["public"]["Enums"]["subscription_status"]
           subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
           support_email?: string | null
@@ -1485,6 +1489,7 @@ export type Database = {
           default_currency?: string
           design_settings?: Json
           email?: string
+          grace_period_end?: string | null
           id?: string
           meta_capi_token_encrypted?: string | null
           meta_pixel_id?: string | null
@@ -1495,6 +1500,7 @@ export type Database = {
           seo_title?: string | null
           shop_slug?: string
           social_links?: Json
+          subscription_last_checked_at?: string | null
           subscription_status?: Database["public"]["Enums"]["subscription_status"]
           subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
           support_email?: string | null
@@ -1530,6 +1536,10 @@ export type Database = {
         }
         Returns: Json
       }
+      effective_subscription_status: {
+        Args: { target_vendor_id: string }
+        Returns: Database["public"]["Enums"]["subscription_status"]
+      }
       has_role: {
         Args: {
           requested_role: Database["public"]["Enums"]["app_role"]
@@ -1555,11 +1565,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      refresh_vendor_subscription: {
+        Args: { target_vendor_id: string }
+        Returns: Database["public"]["Enums"]["subscription_status"]
+      }
       replace_product_variants: {
         Args: { target_product_id: string; variants: Json }
         Returns: undefined
       }
       user_is_school_member: { Args: { _school_id: string }; Returns: boolean }
+      vendor_has_platform_access: {
+        Args: { target_vendor_id: string }
+        Returns: boolean
+      }
       vendor_transition_order: {
         Args: {
           new_status: Database["public"]["Enums"]["order_status"]

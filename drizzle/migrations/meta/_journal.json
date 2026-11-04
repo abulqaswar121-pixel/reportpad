@@ -15,6 +15,13 @@
       "when": 1791650795775,
       "tag": "0001_visitor_vendor_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793822210000,
+      "tag": "0002_subscription_enforcement",
+      "breakpoints": true
     }
   ]
 }
