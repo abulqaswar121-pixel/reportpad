@@ -232,6 +232,78 @@ export type Database = {
           },
         ]
       }
+      email_messages: {
+        Row: {
+          attempts: number
+          created_at: string
+          id: string
+          idempotency_key: string
+          last_error: string | null
+          next_attempt_at: string
+          order_id: string | null
+          payload: Json
+          provider_message_id: string | null
+          recipient_email: string
+          recipient_name: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["email_status"]
+          template: string
+          updated_at: string
+          vendor_id: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          id?: string
+          idempotency_key: string
+          last_error?: string | null
+          next_attempt_at?: string
+          order_id?: string | null
+          payload?: Json
+          provider_message_id?: string | null
+          recipient_email: string
+          recipient_name?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          template: string
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          id?: string
+          idempotency_key?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          order_id?: string | null
+          payload?: Json
+          provider_message_id?: string | null
+          recipient_email?: string
+          recipient_name?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          template?: string
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_messages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_messages_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exchange_rates: {
         Row: {
           currency: string
@@ -1627,6 +1699,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "vendor" | "customer"
       billing_cycle: "monthly" | "yearly"
+      email_status: "queued" | "sending" | "sent" | "failed"
       order_status:
         | "pending"
         | "awaiting_payment"
@@ -1790,6 +1863,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "vendor", "customer"],
       billing_cycle: ["monthly", "yearly"],
+      email_status: ["queued", "sending", "sent", "failed"],
       order_status: [
         "pending",
         "awaiting_payment",

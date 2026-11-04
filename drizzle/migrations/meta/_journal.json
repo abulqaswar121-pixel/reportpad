@@ -22,6 +22,13 @@
       "when": 1793822210000,
       "tag": "0002_subscription_enforcement",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793822225481,
+      "tag": "0003_transactional_email",
+      "breakpoints": true
     }
   ]
 }
