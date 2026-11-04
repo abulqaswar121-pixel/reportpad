@@ -29,6 +29,7 @@ import { ShippingManager } from "./ShippingManager";
 import { PayoutManager } from "./PayoutManager";
 import { MetaManager } from "./MetaManager";
 import { ProductManager } from "./ProductManager";
+import { storeUrl } from "@/lib/brand";
 
 const tabs = [
   ["overview", "Overview", LayoutDashboard],
@@ -56,7 +57,7 @@ export function VendorDashboard({ subscription }: { subscription: SubscriptionAc
             <GatewayMark size={38} />
             <div className="min-w-0">
               <b className="block truncate font-display text-sm text-white">{demoVendor.business_name}</b>
-              <p className="text-[11px] text-white/50">Vendor workspace</p>
+              <p className="text-[11px] text-white/50">NDH ShopOS workspace</p>
             </div>
           </div>
           <button className="grid size-9 place-items-center rounded-full bg-white/10 text-white lg:hidden" onClick={() => setMobileNav(false)} aria-label="Close navigation">
@@ -122,8 +123,8 @@ export function VendorDashboard({ subscription }: { subscription: SubscriptionAc
             <StatusBadge status={subscription.status} label={subscription.status.replace("_", " ")} />
           </div>
           <div className="mx-auto mt-3 flex max-w-7xl items-center gap-2 rounded-xl bg-surface px-3 py-2 text-xs text-ink-soft">
-            <span className="truncate">ndh.com.ng/store/{demoVendor.shop_slug}</span>
-            <button title="Copy store link" onClick={() => void navigator.clipboard.writeText(`https://ndh.com.ng/store/${demoVendor.shop_slug}`)}>
+            <span className="truncate">{storeUrl(demoVendor.shop_slug)}</span>
+            <button title="Copy store link" onClick={() => void navigator.clipboard.writeText(`https://${storeUrl(demoVendor.shop_slug)}`)}>
               <Copy className="size-3" />
             </button>
             <a href={`/store/${demoVendor.shop_slug}`} aria-label="Open public store">

@@ -1,6 +1,15 @@
-# NDH eStore
+# NDH ShopOS
 
-Multi-vendor commerce platform for Najeeb Digital Hub — [estore.ndh.com.ng](https://estore.ndh.com.ng). Built with TanStack Start (v1) + Vite 7 on Supabase.
+**The all-in-one store builder and commerce operating system for modern African merchants and creators.**
+
+NDH ShopOS is a Shopify-style **store-builder SaaS**: merchants subscribe to a monthly or annual plan
+(Starter, Pro, Enterprise) to create, host and run their own independent, branded online store.
+It is **not** a public marketplace — the store directory at `/catalog` is only a secondary discovery
+listing for live merchant stores.
+
+NDH ShopOS is a **Product of Najeeb Digital Hub** — [ndhnet.com](https://ndhnet.com).
+
+Built with TanStack Start (v1) + Vite 7 on Supabase.
 
 ## Quick start
 
@@ -28,8 +37,13 @@ No environment variables are required to preview: with no Supabase keys the app 
 - **Supabase RPCs** (defined in migrations, called from server functions): `create_storefront_order`, `mark_order_paid`, `vendor_ngn_ledger`, `request_vendor_payout`, `replace_product_variants`, `vendor_transition_order`.
 - **Meta Commerce**: catalog feed at `/store/:slug/feeds/catalog/xml` + Conversions API events.
 - **AI assistant "Nia"** with commerce prompt shortcuts.
+- **Merchant directory** at `/catalog` ("Stores powered by NDH ShopOS") — a discovery surface, never the hero.
 
 ## Brand
+
+Product name **NDH ShopOS**, tagline "The all-in-one store builder and commerce operating system for
+modern African merchants and creators." Copy, SEO titles and plan definitions live in
+`src/lib/brand.ts` and `src/lib/plans.ts`; keep new marketing copy pointed at those modules.
 
 Uses the exact NDH master assets (`public/ndh-gateway.png`, `public/ndh-ai-assistant.png`) with the lucide `ShoppingBag` sector. Headings in Space Grotesk, body in DM Sans. Deep Navy `#070F1E` canvas with Electric Cyan `#00E5FF` accents — see `src/styles.css` for the full token set.
 

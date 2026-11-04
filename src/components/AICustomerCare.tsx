@@ -6,6 +6,7 @@ type Message = { id: number; from: "agent" | "user"; text: string };
 
 const suggestions = [
   "Which plan is right for me?",
+  "How do I start my free trial?",
   "How does WhatsApp checkout work?",
   "Can I sell internationally?",
   "Talk to a human",
@@ -14,11 +15,11 @@ const suggestions = [
 function answer(question: string) {
   const q = question.toLowerCase();
   if (q.includes("plan") || q.includes("pricing"))
-    return "Starter is ideal for a new catalogue of up to 30 products. Pro adds unlimited inventory, advanced layouts and booking tools. Global Enterprise is best for international payments, currencies and custom domains.";
+    return "Starter is ideal for a new catalogue of up to 30 products. Pro adds unlimited inventory, advanced layouts and booking tools. Enterprise is best for multi-currency selling, international card payments and custom domains.";
   if (q.includes("whatsapp"))
     return "For Nigerian orders, a customer can prepare their cart and send the complete item list, delivery zone and total directly to your active WhatsApp line. You receive a clear, ready-to-confirm order brief.";
   if (q.includes("international") || q.includes("global"))
-    return "Yes. Global Enterprise can display USD, GBP and NGN, detect international destinations and route those customers to supported global card processing automatically.";
+    return "Yes. Enterprise stores can price in USD, GBP and NGN, detect international destinations and route those customers to supported global card processing automatically.";
   if (q.includes("human") || q.includes("person") || q.includes("call"))
     return "Absolutely. You can reach the Najeeb Digital Hub team at admin@ndh.com.ng or on WhatsApp at 0902 993 2794. I can also help you prepare what to ask.";
   if (q.includes("trial"))
@@ -36,7 +37,7 @@ export function AICustomerCare() {
     {
       id: 1,
       from: "agent",
-      text: "Hi! I’m Nia, your NDH commerce assistant. How can I help you build or grow your store today?",
+      text: "Hi! I’m Nia, your NDH ShopOS assistant. Ask me about plans, store setup, delivery rates or payments.",
     },
   ]);
   const end = useRef<HTMLDivElement>(null);

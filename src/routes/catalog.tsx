@@ -10,9 +10,9 @@ import { pageMeta } from "@/lib/seo";
 export const Route = createFileRoute("/catalog")({
   head: () => ({
     meta: pageMeta({
-      title: "Catalog — shop every NDH eStore merchant | NDH eStore",
+      title: "Store directory — explore stores powered by NDH ShopOS",
       description:
-        "Browse live products across every published NDH eStore merchant: fashion, grocery, wholesale, cargo and digital businesses with transparent prices.",
+        "A directory of independent merchant stores built with NDH ShopOS: fashion, grocery, wholesale, cargo, digital and service businesses, each with its own checkout.",
     }),
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(marketplaceQuery()),
@@ -55,13 +55,13 @@ function CatalogPage() {
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-5 sm:py-16">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="eyebrow">Marketplace</p>
-              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">
-                The catalog
+              <p className="eyebrow">Merchant directory</p>
+              <h1 className="mt-3 text-3xl font-semibold tracking-[-0.03em] sm:text-5xl">
+                Stores powered by NDH ShopOS
               </h1>
-              <p className="mt-4 max-w-xl text-muted-foreground">
-                Every product published by live NDH eStore merchants, with
-                transparent pricing from the source store.
+              <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+                An optional discovery directory of independent stores. Each merchant keeps its own
+                brand, products and checkout — you are browsing their shelves, not ours.
               </p>
             </div>
             <div className="relative w-full sm:w-80">
@@ -117,7 +117,7 @@ function CatalogPage() {
             <h3 className="mt-4 text-xl font-semibold">Nothing matches yet</h3>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
               {data.items.length === 0
-                ? "No merchant has published products yet. Be the first to open a store and put your catalogue in front of the marketplace."
+                ? "No merchant has published products yet. Be the first to open a store and list it in the directory."
                 : "Try a different search term or category — or clear the filters to see the full catalog."}
             </p>
             {data.items.length === 0 ? (

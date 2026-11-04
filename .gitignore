@@ -8,3 +8,6 @@ dist
 
 # Generated narration exports
 audio/
+
+# Build output (nitro/cloudflare)
+.output/

@@ -49,7 +49,7 @@ export const initializeOrderPayment=createServerFn({method:'POST'})
       }else{
         const response=await jsonRequest('https://api.flutterwave.com/v3/payments',{
           method:'POST',headers:{Authorization:`Bearer ${required('FLUTTERWAVE_SECRET_KEY')}`,'Content-Type':'application/json'},
-          body:JSON.stringify({tx_ref:reference,amount:order.total,currency:order.currency,redirect_url:`${appUrl()}/payment/callback?provider=flutterwave`,customer:{email:order.customer_email,name:order.customer_name,phonenumber:order.customer_phone??undefined},customizations:{title:'NDH Estore Payment',description:`Order NDH-${order.order_number}`},meta:{order_id:order.id,order_number:order.order_number}})
+          body:JSON.stringify({tx_ref:reference,amount:order.total,currency:order.currency,redirect_url:`${appUrl()}/payment/callback?provider=flutterwave`,customer:{email:order.customer_email,name:order.customer_name,phonenumber:order.customer_phone??undefined},customizations:{title:'NDH ShopOS Payment',description:`Order NDH-${order.order_number}`},meta:{order_id:order.id,order_number:order.order_number}})
         })
         const providerData=response.data as {link?:string}|undefined
         if(!providerData?.link)throw new Error('Flutterwave did not return a checkout URL.')
