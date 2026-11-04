@@ -1,4 +1,6 @@
-import {hasSupabaseAdmin,appUrl} from '@/lib/supabase/env'
+import {hasSupabaseAdmin,appUrlFrom} from '@/lib/supabase/env'
+import {getRequest as currentRequest} from '@tanstack/react-start/server'
+const appUrl=()=>appUrlFrom(currentRequest()?.url)
 import {createServerFn} from '@tanstack/react-start'
 import {getSupabaseAdminClient} from './supabase/server'
 import type {Json} from '@/types/database'

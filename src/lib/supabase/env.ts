@@ -1,5 +1,3 @@
-import {getRequest} from '@tanstack/react-start/server'
-
 // Server-side connection settings. The live website and the preview expose these
 // under slightly different names, so every lookup checks all of them.
 export function supabaseUrl(){
@@ -20,8 +18,9 @@ export function hasSupabaseAdmin(){
 
 // Public website address used in payment return links and email links.
 // Uses APP_URL when set, otherwise the address the visitor is actually on.
-export function appUrl(){
+export function appUrlFrom(requestUrl?:string){
   const configured=process.env.APP_URL?.replace(/\/$/,'')
   if(configured&&!configured.includes('localhost'))return configured
-  try{return new URL(getRequest().url).origin}catch{return configured||'http://localhost:8080'}
+  try{if(requestUrl)return new URL(requestUrl).origin}catch{}
+  return configured||'http://localhost:8080'
 }

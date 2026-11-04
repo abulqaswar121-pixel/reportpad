@@ -1,4 +1,6 @@
-import {hasSupabase,appUrl} from '@/lib/supabase/env'
+import {hasSupabase,appUrlFrom} from '@/lib/supabase/env'
+import {getRequest as currentRequest} from '@tanstack/react-start/server'
+const appUrl=()=>appUrlFrom(currentRequest()?.url)
 import {createServerFn} from '@tanstack/react-start'
 import {deleteCookie,getCookie,setCookie} from '@tanstack/react-start/server'
 import {getSupabaseServerClient} from './supabase/server'
