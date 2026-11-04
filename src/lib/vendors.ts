@@ -1,10 +1,11 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getCookie} from '@tanstack/react-start/server'
 import {getSupabaseServerClient} from './supabase/server'
 import type {DesignSettings,VendorArchetype} from '@/types/schema'
 
 const ACCESS_COOKIE='ndh_access_token'
-function configured(){return Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)}
+function configured(){return Boolean(hasSupabase())}
 async function authenticatedClient(){
   if(!configured())return null
   const token=getCookie(ACCESS_COOKIE)

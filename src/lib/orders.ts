@@ -1,10 +1,11 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getSupabaseServerClient} from './supabase/server'
 import {dispatchOrderEmails} from './email'
 
 export type CheckoutInput={vendorSlug:string;checkoutToken:string;customer:{name:string;email:string;phone:string;note:string};destination:{country_code:string;state?:string;zone?:string;address?:string};zoneId:string|null;provider:'paystack'|'flutterwave'|'stripe'|'bank_transfer'|'whatsapp';items:Array<{product_id:string;variant_id:string|null;quantity:number}>}
 export type OrderSummary={order_id:string;order_number:number;currency:string;subtotal:number;shipping_fee:number;platform_fee:number;total:number}
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 export const createOrder=createServerFn({method:'POST'}).validator((value:CheckoutInput)=>value).handler(async({data})=>{
   if(!configured())return {ok:true,error:null,order:{order_id:`demo-${Date.now()}`,order_number:Number(String(Date.now()).slice(-6)),currency:data.destination.country_code==='NG'?'NGN':'USD',subtotal:0,shipping_fee:0,platform_fee:0,total:0} as OrderSummary}
   if(!/^[0-9a-f-]{36}$/i.test(data.checkoutToken))return {ok:false,error:'Invalid checkout session.',order:null}

@@ -15,6 +15,48 @@
       "when": 1791650795775,
       "tag": "0001_visitor_vendor_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793822210000,
+      "tag": "0002_subscription_enforcement",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793822225481,
+      "tag": "0003_transactional_email",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793822246665,
+      "tag": "0004_payout_ledger",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793822256737,
+      "tag": "0005_meta_commerce",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793822305969,
+      "tag": "0006_lock_payout_accounts_from_visitors",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793822354762,
+      "tag": "0007_move_commerce_helpers_private",
+      "breakpoints": true
     }
   ]
 }

@@ -1,9 +1,10 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getCookie} from '@tanstack/react-start/server'
 import {queryOptions} from '@tanstack/react-query'
 import {getSupabaseAdminClient,getSupabaseServerClient} from './supabase/server'
 import type {Json} from '@/types/database'
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 const bytes=(value:string)=>new TextEncoder().encode(value)
 const encode=(value:Uint8Array)=>Buffer.from(value).toString('base64url')
 const decode=(value:string)=>new Uint8Array(Buffer.from(value,'base64url'))

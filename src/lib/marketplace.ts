@@ -1,3 +1,4 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import { createServerFn } from "@tanstack/react-start";
 import { queryOptions } from "@tanstack/react-query";
 import { getSupabaseServerClient } from "./supabase/server";
@@ -26,7 +27,7 @@ export type MarketplaceData = {
 };
 
 const configured = () =>
-  Boolean(process.env.VITE_SUPABASE_URL && process.env.VITE_SUPABASE_ANON_KEY);
+  Boolean(hasSupabase());
 
 function demoMarketplace(): MarketplaceData {
   const items: CatalogItem[] = demoProducts.map((product) => ({

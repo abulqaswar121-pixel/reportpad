@@ -1,3 +1,4 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {queryOptions} from '@tanstack/react-query'
 import {getSupabaseServerClient} from './supabase/server'
@@ -11,7 +12,7 @@ export type DeliveryZone={id:string;country_code:string;state:string;zone_name:s
 export type CargoProfile={id:string;name:string;origin_country:string;destination_country:string;transport_mode:string;metric:'kg'|'cbm'|'flat';rate:number;currency:string;minimum_charge:number}
 export type StoreVendor={id:string;business_name:string;shop_slug:string;whatsapp_number:string;business_category:VendorArchetype;business_description:string;design_settings:DesignSettings;subscription_status:SubscriptionStatus;subscription_tier:string;default_currency:string;timezone:string;seo_title:string|null;seo_description:string|null;meta_pixel_id:string|null}
 export type StorefrontData={configured:boolean;notFound:boolean;locked:boolean;vendor:StoreVendor|null;products:StoreProduct[];shippingZones:DeliveryZone[];cargoProfiles:CargoProfile[]}
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 const normalizeSlug=(value:string)=>value.toLowerCase().trim().replace(/[^a-z0-9-]/g,'').slice(0,64)
 function demo(slug:string):StorefrontData{return {configured:false,notFound:false,locked:false,vendor:{...demoVendor,shop_slug:slug,business_description:'Premium hair, thoughtfully sourced and beautifully finished in Lagos.',default_currency:'NGN',timezone:'Africa/Lagos',seo_title:null,seo_description:null,meta_pixel_id:null},products:demoProducts.map(product=>({...product,slug:product.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'),image_urls:[{url:product.image_url,path:'demo'}],is_active:true,volume_cbm:0,allocation_threshold:null,variants:demoVariants.filter(variant=>variant.product_id===product.id),booking_slots:[]})),shippingZones:[{id:'zone-1',country_code:'NG',state:'Lagos',zone_name:'Lagos Central',fee:2500,estimated_days_min:1,estimated_days_max:2},{id:'zone-2',country_code:'NG',state:'Lagos',zone_name:'Lagos Island',fee:3500,estimated_days_min:1,estimated_days_max:3},{id:'zone-3',country_code:'NG',state:'Lagos',zone_name:'Lagos Outskirts',fee:5000,estimated_days_min:2,estimated_days_max:4}],cargoProfiles:[]}}
 export const getPublicStorefront=createServerFn({method:'GET'}).validator((slug:string)=>slug).handler(async({data})=>{

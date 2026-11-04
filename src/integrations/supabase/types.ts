@@ -232,6 +232,78 @@ export type Database = {
           },
         ]
       }
+      email_messages: {
+        Row: {
+          attempts: number
+          created_at: string
+          id: string
+          idempotency_key: string
+          last_error: string | null
+          next_attempt_at: string
+          order_id: string | null
+          payload: Json
+          provider_message_id: string | null
+          recipient_email: string
+          recipient_name: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["email_status"]
+          template: string
+          updated_at: string
+          vendor_id: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          id?: string
+          idempotency_key: string
+          last_error?: string | null
+          next_attempt_at?: string
+          order_id?: string | null
+          payload?: Json
+          provider_message_id?: string | null
+          recipient_email: string
+          recipient_name?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          template: string
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          id?: string
+          idempotency_key?: string
+          last_error?: string | null
+          next_attempt_at?: string
+          order_id?: string | null
+          payload?: Json
+          provider_message_id?: string | null
+          recipient_email?: string
+          recipient_name?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["email_status"]
+          template?: string
+          updated_at?: string
+          vendor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_messages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_messages_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exchange_rates: {
         Row: {
           currency: string
@@ -303,6 +375,66 @@ export type Database = {
             columns: ["student_id"]
             isOneToOne: false
             referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meta_events: {
+        Row: {
+          created_at: string
+          event_id: string
+          event_name: string
+          failure_reason: string | null
+          id: string
+          order_id: string | null
+          payload: Json
+          provider_response: Json | null
+          sent_at: string | null
+          source_url: string | null
+          status: string
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          event_name: string
+          failure_reason?: string | null
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          provider_response?: Json | null
+          sent_at?: string | null
+          source_url?: string | null
+          status?: string
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          event_name?: string
+          failure_reason?: string | null
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          provider_response?: Json | null
+          sent_at?: string | null
+          source_url?: string | null
+          status?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meta_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meta_events_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
             referencedColumns: ["id"]
           },
         ]
@@ -725,6 +857,91 @@ export type Database = {
             columns: ["order_id"]
             isOneToOne: false
             referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payout_accounts: {
+        Row: {
+          account_name: string
+          account_number_last4: string
+          bank_code: string
+          bank_name: string
+          created_at: string
+          id: string
+          is_default: boolean
+          provider_recipient_code: string
+          updated_at: string
+          vendor_id: string
+          verified_at: string
+        }
+        Insert: {
+          account_name: string
+          account_number_last4: string
+          bank_code: string
+          bank_name: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          provider_recipient_code: string
+          updated_at?: string
+          vendor_id: string
+          verified_at?: string
+        }
+        Update: {
+          account_name?: string
+          account_number_last4?: string
+          bank_code?: string
+          bank_name?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          provider_recipient_code?: string
+          updated_at?: string
+          vendor_id?: string
+          verified_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_accounts_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payout_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          payload: Json
+          payout_id: string
+          provider_event_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          payload?: Json
+          payout_id: string
+          provider_event_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          payout_id?: string
+          provider_event_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_events_payout_id_fkey"
+            columns: ["payout_id"]
+            isOneToOne: false
+            referencedRelation: "payouts"
             referencedColumns: ["id"]
           },
         ]
@@ -1427,6 +1644,7 @@ export type Database = {
           default_currency: string
           design_settings: Json
           email: string
+          grace_period_end: string | null
           id: string
           meta_capi_token_encrypted: string | null
           meta_pixel_id: string | null
@@ -1437,6 +1655,7 @@ export type Database = {
           seo_title: string | null
           shop_slug: string
           social_links: Json
+          subscription_last_checked_at: string | null
           subscription_status: Database["public"]["Enums"]["subscription_status"]
           subscription_tier: Database["public"]["Enums"]["subscription_tier"]
           support_email: string | null
@@ -1456,6 +1675,7 @@ export type Database = {
           default_currency?: string
           design_settings?: Json
           email: string
+          grace_period_end?: string | null
           id?: string
           meta_capi_token_encrypted?: string | null
           meta_pixel_id?: string | null
@@ -1466,6 +1686,7 @@ export type Database = {
           seo_title?: string | null
           shop_slug: string
           social_links?: Json
+          subscription_last_checked_at?: string | null
           subscription_status?: Database["public"]["Enums"]["subscription_status"]
           subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
           support_email?: string | null
@@ -1485,6 +1706,7 @@ export type Database = {
           default_currency?: string
           design_settings?: Json
           email?: string
+          grace_period_end?: string | null
           id?: string
           meta_capi_token_encrypted?: string | null
           meta_pixel_id?: string | null
@@ -1495,6 +1717,7 @@ export type Database = {
           seo_title?: string | null
           shop_slug?: string
           social_links?: Json
+          subscription_last_checked_at?: string | null
           subscription_status?: Database["public"]["Enums"]["subscription_status"]
           subscription_tier?: Database["public"]["Enums"]["subscription_tier"]
           support_email?: string | null
@@ -1530,6 +1753,10 @@ export type Database = {
         }
         Returns: Json
       }
+      effective_subscription_status: {
+        Args: { target_vendor_id: string }
+        Returns: Database["public"]["Enums"]["subscription_status"]
+      }
       has_role: {
         Args: {
           requested_role: Database["public"]["Enums"]["app_role"]
@@ -1555,15 +1782,57 @@ export type Database = {
         }
         Returns: boolean
       }
+      refresh_vendor_subscription: {
+        Args: { target_vendor_id: string }
+        Returns: Database["public"]["Enums"]["subscription_status"]
+      }
       replace_product_variants: {
         Args: { target_product_id: string; variants: Json }
         Returns: undefined
       }
+      request_vendor_payout: {
+        Args: { requested_amount: number; target_account_id: string }
+        Returns: {
+          amount: number
+          bank_account_snapshot: Json
+          created_at: string
+          currency: string
+          failure_reason: string | null
+          id: string
+          processed_at: string | null
+          provider_reference: string | null
+          requested_at: string
+          status: Database["public"]["Enums"]["payout_status"]
+          updated_at: string
+          vendor_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "payouts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       user_is_school_member: { Args: { _school_id: string }; Returns: boolean }
+      vendor_has_platform_access: {
+        Args: { target_vendor_id: string }
+        Returns: boolean
+      }
+      vendor_ngn_ledger: {
+        Args: { target_vendor_id: string }
+        Returns: {
+          available: number
+          gross: number
+          paid_out: number
+          pending_payouts: number
+          platform_fees: number
+          processing_fees: number
+        }[]
+      }
       vendor_transition_order: {
         Args: {
           new_status: Database["public"]["Enums"]["order_status"]
-          note?: string
+          note: string
           target_order_id: string
         }
         Returns: {
@@ -1609,6 +1878,7 @@ export type Database = {
     Enums: {
       app_role: "admin" | "vendor" | "customer"
       billing_cycle: "monthly" | "yearly"
+      email_status: "queued" | "sending" | "sent" | "failed"
       order_status:
         | "pending"
         | "awaiting_payment"
@@ -1772,6 +2042,7 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "vendor", "customer"],
       billing_cycle: ["monthly", "yearly"],
+      email_status: ["queued", "sending", "sent", "failed"],
       order_status: [
         "pending",
         "awaiting_payment",

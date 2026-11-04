@@ -1,10 +1,11 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getCookie} from '@tanstack/react-start/server'
 import {queryOptions} from '@tanstack/react-query'
 import {getSupabaseServerClient} from './supabase/server'
 import type {CargoProfile,DeliveryZone} from './storefront'
 
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 async function vendorContext(){if(!configured())return null;const token=getCookie('ndh_access_token');if(!token)throw new Error('Authentication required.');const client=getSupabaseServerClient(token);const {data:{user}}=await client.auth.getUser(token);if(!user)throw new Error('Your session has expired.');const {data:vendor}=await client.from('vendors').select('id,business_category,subscription_tier').eq('owner_user_id',user.id).single();if(!vendor)throw new Error('Vendor workspace not found.');const {data:hasAccess}=await client.rpc('vendor_has_platform_access',{target_vendor_id:vendor.id});if(!hasAccess)throw new Error('Your subscription has expired. Renew from Billing to manage shipping.');return{client,vendor}}
 export type ZoneInput={id?:string;countryCode:string;state:string;zoneName:string;fee:number;estimatedDaysMin:number|null;estimatedDaysMax:number|null;active:boolean}
 export type CargoInput={id?:string;name:string;originCountry:string;destinationCountry:string;transportMode:'air'|'ocean'|'road'|'rail';metric:'kg'|'cbm'|'flat';rate:number;currency:'NGN'|'USD'|'GBP';minimumCharge:number;active:boolean}

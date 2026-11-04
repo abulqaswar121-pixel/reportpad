@@ -1,10 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { fileURLToPath, URL } from 'node:url'
-export default defineConfig({
-  plugins:[tailwindcss(),tanstackStart(),react()],
-  resolve:{alias:{'@':fileURLToPath(new URL('./src',import.meta.url))}},
-  server:{host:'0.0.0.0',allowedHosts:true}
-})
+// Lovable's TanStack config already wires TanStack Start, React, Tailwind, the "@" path alias,
+// and the production server build. Do not add those plugins here again.
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+
+export default defineConfig();

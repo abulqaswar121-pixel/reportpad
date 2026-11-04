@@ -1,3 +1,4 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getCookie} from '@tanstack/react-start/server'
 import {getSupabaseServerClient} from './supabase/server'
@@ -5,7 +6,7 @@ import {getSupabaseServerClient} from './supabase/server'
 const ACCESS_COOKIE='ndh_access_token'
 const imageTypes=new Set(['image/jpeg','image/png','image/webp','image/gif'])
 type AssetKind='product'|'branding'
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 async function auth(){
   if(!configured())return null
   const token=getCookie(ACCESS_COOKIE);if(!token)throw new Error('Authentication required.')
