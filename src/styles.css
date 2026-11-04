@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 /* ============================================================
-   NDH eStore — Porcelain Commerce Canvas
+   NDH ShopOS — Porcelain Commerce Canvas
    Aligned with the Najeeb Digital Hub master design system:
    daylight porcelain surfaces, hairline structure, deep navy
    anchors and electric cyan accents.
+   NDH ShopOS is a Product of Najeeb Digital Hub (ndhnet.com).
    ============================================================ */
 
 @theme {
@@ -457,6 +458,16 @@ button {
   white-space: nowrap;
 }
 
+/* "ShopOS" segment of the lockup carries the product accent. */
+.brand-lockup .brand-name-accent {
+  color: var(--color-info);
+}
+
+.anchor-navy .brand-lockup .brand-name-accent,
+.on-navy .brand-lockup .brand-name-accent {
+  color: var(--color-cyan);
+}
+
 .anchor-navy .brand-lockup .brand-eyebrow,
 .on-navy .brand-lockup .brand-eyebrow {
   color: rgba(255, 255, 255, 0.5);
@@ -620,12 +631,288 @@ button {
 }
 
 /* ============================================================
+   SHOPOS — STORE BUILDER SURFACES
+   Hero storefront mockup, merchant admin card, pillar grid,
+   three-step flow and transparent plan cards.
+   ============================================================ */
+
+/* Browser chrome around a live storefront preview. */
+.store-demo {
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #fff;
+  box-shadow: 0 40px 90px -30px rgba(3, 8, 18, 0.75);
+}
+
+.store-demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 0.55rem 0.75rem;
+  min-width: 0;
+}
+
+.store-demo-url {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--color-surface);
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Preview tab strip inside the mockup. */
+.demo-tabs {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 0 0.5rem;
+}
+
+.demo-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.demo-tab {
+  flex: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.6rem 0.7rem;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.demo-tab[data-active="true"] {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-foreground);
+}
+
+/* Stat tile used inside the merchant admin preview. */
+.demo-stat {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  padding: 0.6rem 0.65rem;
+  min-width: 0;
+}
+
+.demo-stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.demo-stat span {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+/* Floating WhatsApp / payout chips over the hero visual. */
+.demo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  max-width: 100%;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(7, 15, 30, 0.55);
+  padding: 0.25rem 0.55rem;
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+
+/* Light-surface variant used inside the merchant admin preview. */
+.demo-chip-light {
+  border-color: var(--color-border);
+  background: var(--color-card);
+  color: var(--color-ink-soft);
+  backdrop-filter: none;
+}
+
+.demo-chip svg {
+  flex: none;
+}
+
+/* White feature card on the light gray canvas. */
+.pillar-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #ffffff;
+  padding: 1.5rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pillar-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 16px 36px -20px rgba(7, 15, 30, 0.24);
+}
+
+/* Density modifiers (plain CSS, so they are not overridden by utilities). */
+.pillar-card-compact {
+  padding: 1rem;
+}
+
+.pillar-card-flush {
+  padding: 0;
+}
+
+.pillar-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  color: var(--color-cyan);
+}
+
+/* Numbered step markers for "How it works". */
+.step-marker {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-cyan);
+}
+
+/* Transparent plan cards — equal-height, wrap-safe. */
+.plan-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: #ffffff;
+  padding: 1.5rem;
+}
+
+.plan-card[data-featured="true"] {
+  border-color: var(--color-primary);
+  box-shadow: 0 20px 50px -26px rgba(7, 15, 30, 0.4);
+}
+
+.plan-feature {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+  overflow-wrap: break-word;
+}
+
+/* Merchant directory tile — compact secondary showcase. */
+.directory-tile {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  padding: 0.75rem;
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.directory-tile:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-border-strong);
+}
+
+/* Parent-company attribution link. */
+.parent-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.parent-link:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+/* ============================================================
    RESPONSIVE SAFEGUARDS
    ============================================================ */
 
 @media (max-width: 639px) {
   body {
     font-size: 14.5px;
+  }
+
+  /* Keep the lockup on one line inside a 360px header. */
+  .brand-lockup .brand-name {
+    font-size: 0.97rem;
+  }
+
+  .brand-lockup .brand-eyebrow {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+  }
+
+  /* Store-builder sections breathe less on small screens. */
+  .pillar-card,
+  .plan-card {
+    padding: 1.15rem;
+  }
+
+  .parent-link {
+    white-space: normal;
+    text-align: left;
   }
 
   .animate-float {

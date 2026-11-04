@@ -550,7 +550,7 @@ export function DynamicStorefront({
           <div>
             <b className="font-display text-xs tracking-[0.18em]">POWERED BY</b>
             <p className="mt-4 text-sm leading-6 text-white/60">
-              This store runs on NDH eStore — commerce infrastructure by Najeeb Digital Hub.
+              This store is built with NDH ShopOS, the store builder and commerce operating system by Najeeb Digital Hub.
             </p>
           </div>
         </div>

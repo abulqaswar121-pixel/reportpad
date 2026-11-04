@@ -68,7 +68,7 @@ export const lookupOrder = createServerFn({ method: "POST" })
       .order("created_at", { ascending: true });
     const tracked: TrackedOrder = {
       orderNumber: Number(order.order_number),
-      storeName: vendor?.business_name ?? "NDH eStore merchant",
+      storeName: vendor?.business_name ?? "NDH ShopOS merchant",
       storeSlug: vendor?.shop_slug ?? "",
       status: order.status,
       currency: order.currency,

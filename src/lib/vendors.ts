@@ -29,7 +29,7 @@ export const getOnboardingState=createServerFn({method:'GET'}).handler(async()=>
 export const verifyVendorSlug=createServerFn({method:'GET'}).validator((value:string)=>value).handler(async({data})=>{
   const slug=normalizeSlug(data)
   if(slug.length<3)return {slug,available:false,reason:'Use at least three characters.'}
-  if(reservedSlugs.has(slug))return {slug,available:false,reason:'This address is reserved by NDH Estore.'}
+  if(reservedSlugs.has(slug))return {slug,available:false,reason:'This address is reserved by NDH ShopOS.'}
   if(!configured())return {slug,available:slug!=='amari-atelier',reason:slug==='amari-atelier'?'This address is already in use.':null}
   const client=getSupabaseServerClient()
   const {data:existing,error}=await client.from('vendors').select('id').eq('shop_slug',slug).maybeSingle()

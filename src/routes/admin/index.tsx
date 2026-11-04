@@ -10,9 +10,9 @@ import { pageMeta } from "@/lib/seo";
 export const Route = createFileRoute("/admin/")({
   head: () => ({
     meta: pageMeta({
-      title: "Platform review — admin | NDH eStore",
+      title: "Platform review — admin | NDH ShopOS",
       description:
-        "Live platform health for NDH eStore administrators: published stores, order flow and payout queue, straight from the ledger.",
+        "Live platform health for NDH ShopOS administrators: published stores, order flow and payout queue, straight from the ledger.",
     }),
   }),
   beforeLoad: async () => {
@@ -43,7 +43,7 @@ function Admin() {
         <div className="flex items-center gap-4">
           <GatewayMark size={44} />
           <div>
-            <p className="eyebrow">Najeeb Digital Hub · Administration</p>
+            <p className="eyebrow">NDH ShopOS · Najeeb Digital Hub administration</p>
             <h1 className="mt-1 text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
               Platform review
             </h1>

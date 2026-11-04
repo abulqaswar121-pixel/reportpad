@@ -1,4 +1,5 @@
 import { ShoppingBag } from "lucide-react";
+import { brand } from "@/lib/brand";
 
 /**
  * NDH Open Gateway master symbol, commerce edition.
@@ -49,23 +50,28 @@ export function GatewayMark({
 }
 
 /**
- * The NDH eStore header lockup: master mark + two-line label.
+ * The NDH ShopOS header lockup: NDH Gateway mark + two-line label.
  * Top line: NAJEEB DIGITAL HUB (small, tracking-widest, muted).
- * Bottom line: NDH eStore (bold, primary, Space Grotesk).
+ * Bottom line: NDH ShopOS (bold, primary, Space Grotesk) with the
+ *             "ShopOS" segment set apart so the product reads at a glance.
  */
 export function EstStoreLockup({
   size = 40,
   onNavy = false,
+  showFamily = true,
 }: {
   size?: number;
   onNavy?: boolean;
+  showFamily?: boolean;
 }) {
   return (
-    <span className={`flex items-center gap-3 ${onNavy ? "on-navy" : ""}`}>
+    <span className={`flex min-w-0 items-center gap-2.5 ${onNavy ? "on-navy" : ""}`}>
       <GatewayMark size={size} />
       <span className="brand-lockup">
-        <span className="brand-eyebrow">NAJEEB DIGITAL HUB</span>
-        <span className="brand-name">NDH eStore</span>
+        {showFamily ? <span className="brand-eyebrow">{brand.family}</span> : null}
+        <span className="brand-name">
+          NDH <span className="brand-name-accent">ShopOS</span>
+        </span>
       </span>
     </span>
   );

@@ -10,9 +10,9 @@ import { pageMeta } from "@/lib/seo";
 export const Route = createFileRoute("/track")({
   head: () => ({
     meta: pageMeta({
-      title: "Track your order | NDH eStore",
+      title: "Track your order | NDH ShopOS",
       description:
-        "Look up the status of any NDH eStore order with your order number and the email used at checkout.",
+        "Look up the status of any order placed on an NDH ShopOS-powered store with your order number and the email used at checkout.",
     }),
   }),
   component: TrackPage,

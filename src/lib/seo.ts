@@ -1,3 +1,5 @@
+import { brand } from "@/lib/brand";
+
 /** Shared builder for per-page head metadata. */
 export type PageMetaInput = {
   title: string;
@@ -18,10 +20,11 @@ export function pageMeta({
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:type", content: type },
-    { property: "og:site_name", content: "NDH eStore" },
+    { property: "og:site_name", content: brand.name },
     { property: "og:image", content: image },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    { property: "og:locale", content: "en_NG" },
   ];
 }

@@ -2,19 +2,20 @@ import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanst
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import styles from "../styles.css?url";
 import { AICustomerCare } from "@/components/AICustomerCare";
+import { brand } from "@/lib/brand";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "NDH eStore — Launch and scale your online commerce" },
-      {
-        name: "description",
-        content:
-          "NDH eStore is the commerce platform of Najeeb Digital Hub: storefronts, WhatsApp-first ordering, per-state delivery pricing and multi-currency payments for African merchants selling globally.",
-      },
-      { property: "og:site_name", content: "NDH eStore" },
+      { title: brand.seoTitle },
+      { name: "description", content: brand.seoDescription },
+      { name: "theme-color", content: "#070f1e" },
+      { name: "author", content: brand.parent.label },
+      { property: "og:site_name", content: brand.name },
+      { property: "og:title", content: brand.seoTitle },
+      { property: "og:description", content: brand.seoDescription },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
