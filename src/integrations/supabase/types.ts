@@ -801,6 +801,91 @@ export type Database = {
           },
         ]
       }
+      payout_accounts: {
+        Row: {
+          account_name: string
+          account_number_last4: string
+          bank_code: string
+          bank_name: string
+          created_at: string
+          id: string
+          is_default: boolean
+          provider_recipient_code: string
+          updated_at: string
+          vendor_id: string
+          verified_at: string
+        }
+        Insert: {
+          account_name: string
+          account_number_last4: string
+          bank_code: string
+          bank_name: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          provider_recipient_code: string
+          updated_at?: string
+          vendor_id: string
+          verified_at?: string
+        }
+        Update: {
+          account_name?: string
+          account_number_last4?: string
+          bank_code?: string
+          bank_name?: string
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          provider_recipient_code?: string
+          updated_at?: string
+          vendor_id?: string
+          verified_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_accounts_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payout_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          payload: Json
+          payout_id: string
+          provider_event_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          payload?: Json
+          payout_id: string
+          provider_event_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          payout_id?: string
+          provider_event_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payout_events_payout_id_fkey"
+            columns: ["payout_id"]
+            isOneToOne: false
+            referencedRelation: "payouts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payouts: {
         Row: {
           amount: number
@@ -1645,10 +1730,44 @@ export type Database = {
         Args: { target_product_id: string; variants: Json }
         Returns: undefined
       }
+      request_vendor_payout: {
+        Args: { requested_amount: number; target_account_id: string }
+        Returns: {
+          amount: number
+          bank_account_snapshot: Json
+          created_at: string
+          currency: string
+          failure_reason: string | null
+          id: string
+          processed_at: string | null
+          provider_reference: string | null
+          requested_at: string
+          status: Database["public"]["Enums"]["payout_status"]
+          updated_at: string
+          vendor_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "payouts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       user_is_school_member: { Args: { _school_id: string }; Returns: boolean }
       vendor_has_platform_access: {
         Args: { target_vendor_id: string }
         Returns: boolean
+      }
+      vendor_ngn_ledger: {
+        Args: { target_vendor_id: string }
+        Returns: {
+          available: number
+          gross: number
+          paid_out: number
+          pending_payouts: number
+          platform_fees: number
+          processing_fees: number
+        }[]
       }
       vendor_transition_order: {
         Args: {
