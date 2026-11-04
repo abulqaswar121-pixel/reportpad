@@ -379,6 +379,66 @@ export type Database = {
           },
         ]
       }
+      meta_events: {
+        Row: {
+          created_at: string
+          event_id: string
+          event_name: string
+          failure_reason: string | null
+          id: string
+          order_id: string | null
+          payload: Json
+          provider_response: Json | null
+          sent_at: string | null
+          source_url: string | null
+          status: string
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          event_name: string
+          failure_reason?: string | null
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          provider_response?: Json | null
+          sent_at?: string | null
+          source_url?: string | null
+          status?: string
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          event_name?: string
+          failure_reason?: string | null
+          id?: string
+          order_id?: string | null
+          payload?: Json
+          provider_response?: Json | null
+          sent_at?: string | null
+          source_url?: string | null
+          status?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meta_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meta_events_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ms_halqahs: {
         Row: {
           class_label: string
