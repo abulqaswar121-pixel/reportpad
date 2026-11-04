@@ -1832,7 +1832,7 @@ export type Database = {
       vendor_transition_order: {
         Args: {
           new_status: Database["public"]["Enums"]["order_status"]
-          note?: string
+          note: string
           target_order_id: string
         }
         Returns: {
