@@ -1,3 +1,4 @@
+import {hasSupabaseAdmin,appUrl} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getSupabaseAdminClient} from './supabase/server'
 import type {Json} from '@/types/database'
@@ -6,8 +7,7 @@ import {sendMetaPurchase} from './meta'
 
 type Provider='paystack'|'flutterwave'
 type PaymentOrder={id:string;order_number:number;checkout_token:string;customer_email:string;customer_name:string;customer_phone:string|null;currency:string;total:number;status:string;payment_provider:string|null;payment_reference:string|null;metadata:Record<string,unknown>|null}
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.SUPABASE_SERVICE_ROLE_KEY)
-const appUrl=()=>process.env.APP_URL??'http://localhost:5173'
+const configured=()=>Boolean(hasSupabaseAdmin())
 function required(name:string){const value=process.env[name];if(!value)throw new Error(`${name} is not configured.`);return value}
 async function orderForCheckout(orderId:string,checkoutToken:string){
   const admin=getSupabaseAdminClient()

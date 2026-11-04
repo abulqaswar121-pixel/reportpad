@@ -1,3 +1,4 @@
+import {hasSupabase,appUrl} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {deleteCookie,getCookie,setCookie} from '@tanstack/react-start/server'
 import {getSupabaseServerClient} from './supabase/server'
@@ -9,7 +10,7 @@ const cookieOptions={httpOnly:true,secure:process.env.NODE_ENV==='production',sa
 export type AuthUser={id:string;email:string;fullName:string;roles:UserRole[]}
 export type AuthState={configured:boolean;user:AuthUser|null}
 
-function configured(){return Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)}
+function configured(){return Boolean(hasSupabase())}
 function saveSession(session:{access_token:string;refresh_token:string;expires_in:number}){
   setCookie(ACCESS_COOKIE,session.access_token,{...cookieOptions,maxAge:session.expires_in})
   setCookie(REFRESH_COOKIE,session.refresh_token,{...cookieOptions,maxAge:60*60*24*30})
@@ -55,7 +56,7 @@ export const signUp=createServerFn({method:'POST'}).validator((value:{email:stri
   if(data.fullName.trim().length<2)return {ok:false,error:'Enter your full name.',requiresEmailConfirmation:false}
   if(!/^\S+@\S+\.\S+$/.test(data.email)||data.password.length<8)return {ok:false,error:'Enter a valid email and a password of at least eight characters.',requiresEmailConfirmation:false}
   const client=getSupabaseServerClient()
-  const {data:result,error}=await client.auth.signUp({email:data.email.trim().toLowerCase(),password:data.password,options:{emailRedirectTo:`${process.env.APP_URL??'http://localhost:5173'}/signin`,data:{full_name:data.fullName.trim(),requested_role:data.role}}})
+  const {data:result,error}=await client.auth.signUp({email:data.email.trim().toLowerCase(),password:data.password,options:{emailRedirectTo:`${appUrl()}/signin`,data:{full_name:data.fullName.trim(),requested_role:data.role}}})
   if(error)return {ok:false,error:cleanAuthError(error),requiresEmailConfirmation:false}
   if(result.session)saveSession(result.session)
   return {ok:true,error:null,requiresEmailConfirmation:!result.session}
@@ -71,7 +72,7 @@ export const acceptAuthTokens=createServerFn({method:'POST'}).validator((value:{
 
 export const requestPasswordReset=createServerFn({method:'POST'}).validator((value:{email:string})=>value).handler(async({data})=>{
   if(!configured())return {ok:false,error:'Supabase has not been configured.'}
-  const siteUrl=process.env.APP_URL??'http://localhost:5173'
+  const siteUrl=appUrl()
   const {error}=await getSupabaseServerClient().auth.resetPasswordForEmail(data.email.trim().toLowerCase(),{redirectTo:`${siteUrl}/reset-password`})
   return error?{ok:false,error:cleanAuthError(error)}:{ok:true,error:null}
 })

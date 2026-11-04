@@ -1,3 +1,4 @@
+import {hasSupabase} from '@/lib/supabase/env'
 import {createServerFn} from '@tanstack/react-start'
 import {getCookie} from '@tanstack/react-start/server'
 import {queryOptions} from '@tanstack/react-query'
@@ -6,7 +7,7 @@ import {products as demoProducts,variants as demoVariants} from './data'
 import type {Product,ProductVariant} from '@/types/schema'
 
 const ACCESS_COOKIE='ndh_access_token'
-const configured=()=>Boolean(process.env.VITE_SUPABASE_URL&&process.env.VITE_SUPABASE_ANON_KEY)
+const configured=()=>Boolean(hasSupabase())
 const slugify=(value:string)=>value.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80)
 export type AssetRef={url:string;path:string}
 export type VariantInput={id?:string;variantName:string;variantValue:string;priceModifier:number;stockCount:number;sku?:string}

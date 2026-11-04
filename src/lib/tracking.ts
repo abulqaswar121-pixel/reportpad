@@ -1,3 +1,4 @@
+import {hasSupabaseAdmin} from '@/lib/supabase/env'
 import { createServerFn } from "@tanstack/react-start";
 import { getSupabaseAdminClient } from "./supabase/server";
 
@@ -16,7 +17,7 @@ export type TrackedOrder = {
 };
 
 const configured = () =>
-  Boolean(process.env.VITE_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  Boolean(hasSupabaseAdmin());
 
 export const lookupOrder = createServerFn({ method: "POST" })
   .validator((value: { orderNumber: string; email: string }) => value)
