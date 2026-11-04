@@ -1,0 +1,1 @@
+revoke all on public.payout_accounts from anon;

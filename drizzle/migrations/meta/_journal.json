@@ -43,6 +43,13 @@
       "when": 1793822256737,
       "tag": "0005_meta_commerce",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793822305969,
+      "tag": "0006_lock_payout_accounts_from_visitors",
+      "breakpoints": true
     }
   ]
 }
