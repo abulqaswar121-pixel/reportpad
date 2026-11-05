@@ -1,10 +1,12 @@
 /**
  * Subscription plan catalogue for NDH ShopOS.
- * The tiers map 1:1 to `SubscriptionTier` in `@/types/schema`
- * (starter | pro | global_enterprise, surfaced to merchants as Enterprise).
+ *
+ * Merchant-facing names are Free, Starter and Growth. They map onto the
+ * database `SubscriptionTier` values (starter | pro | global_enterprise) so the
+ * existing billing, limits and admin logic keep working unchanged.
  */
 export type Plan = {
-  /** Merchant-facing tier label. */
+  /** Merchant-facing plan label. */
   name: string;
   /** Value stored in `vendors.subscription_tier`. */
   tier: "starter" | "pro" | "global_enterprise";
@@ -22,50 +24,50 @@ export type Plan = {
 
 export const plans: Plan[] = [
   {
-    name: "Starter",
+    name: "Free",
     tier: "starter",
-    monthly: "₦5,000",
-    annual: "₦48,000",
-    fee: "2.5% transaction fee",
-    desc: "For new merchants launching their first branded store.",
+    monthly: "₦0",
+    annual: "₦0",
+    fee: "3.5% transaction fee",
+    desc: "Test the water and publish your first store link.",
     limits: [
-      "Up to 30 products",
-      "1 flat delivery fee per state",
-      "Naira checkout + WhatsApp orders",
-      "Standard support",
+      "Up to 10 products",
+      "Your ndhshopos.com store link",
+      "WhatsApp ordering",
+      "Naira checkout",
     ],
-    cta: "Start Your Free Trial",
+    cta: "Create your store free",
     ctaTo: "/signup",
   },
   {
-    name: "Pro",
+    name: "Starter",
     tier: "pro",
-    monthly: "₦15,000",
-    annual: "₦144,000",
-    fee: "1.5% transaction fee",
-    desc: "For growing brands that sell every day.",
+    monthly: "₦5,000",
+    annual: "₦48,000",
+    fee: "2.5% transaction fee",
+    desc: "For merchants selling every week who need room to grow.",
     limits: [
-      "Unlimited products",
-      "Digital downloads & booking calendars",
-      "Regional delivery sub-zones",
-      "Inventory alerts & priority support",
+      "Up to 100 products",
+      "Digital downloads & bookings",
+      "State-by-state delivery fees",
+      "Inventory alerts & email support",
     ],
-    cta: "Start Your Free Trial",
+    cta: "Start Free Trial",
     ctaTo: "/signup",
     popular: true,
   },
   {
-    name: "Enterprise",
+    name: "Growth",
     tier: "global_enterprise",
-    monthly: "₦40,000",
-    annual: "₦384,000",
-    fee: "1.0% local · 3.5% international",
-    desc: "For multi-currency brands selling across borders.",
+    monthly: "₦15,000",
+    annual: "₦144,000",
+    fee: "1.5% local · 3.5% international",
+    desc: "For brands selling across borders with a team behind them.",
     limits: [
+      "Unlimited products & staff access",
       "USD, GBP and NGN pricing",
       "Custom domain eligibility",
-      "Heavy cargo profiles",
-      "Meta feeds & premium support",
+      "Cargo profiles & priority support",
     ],
     cta: "Talk to sales",
     ctaTo: "/book-call",
@@ -74,12 +76,12 @@ export const plans: Plan[] = [
 
 /** Side-by-side limits shown on the /pricing comparison strip. */
 export const planComparison = [
-  ["Products", "Up to 30", "Unlimited", "Unlimited"],
-  ["Transaction fee", "2.5%", "1.5%", "1.0% local · 3.5% intl."],
+  ["Products", "Up to 10", "Up to 100", "Unlimited"],
+  ["Transaction fee", "3.5%", "2.5%", "1.5% local · 3.5% intl."],
   ["Currencies", "NGN", "NGN", "NGN · USD · GBP"],
   ["Delivery zones", "1 per state", "Regional sub-zones", "Regional + cargo"],
   ["Digital downloads", "—", "Included", "Included"],
   ["Service bookings", "—", "Included", "Included"],
   ["Custom domain", "—", "—", "Eligible"],
-  ["Support", "Standard", "Priority", "Premium"],
+  ["Support", "Email", "Standard", "Priority"],
 ] as const;

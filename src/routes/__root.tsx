@@ -26,6 +26,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // The invisible translation engine loads from Google in the background.
+      { rel: "preconnect", href: "https://translate.google.com", crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: "https://translate.googleapis.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap",

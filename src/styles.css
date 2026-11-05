@@ -762,7 +762,7 @@ button {
   flex: none;
 }
 
-/* White feature card on the light gray canvas. */
+/* White feature card on the light gray canvas — generous p-6 / sm:p-8. */
 .pillar-card {
   display: flex;
   flex-direction: column;
@@ -776,6 +776,12 @@ button {
     border-color 0.2s ease;
 }
 
+@media (min-width: 640px) {
+  .pillar-card {
+    padding: 2rem;
+  }
+}
+
 .pillar-card:hover {
   transform: translateY(-2px);
   border-color: var(--color-border-strong);
@@ -784,7 +790,7 @@ button {
 
 /* Density modifiers (plain CSS, so they are not overridden by utilities). */
 .pillar-card-compact {
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .pillar-card-flush {
@@ -826,6 +832,12 @@ button {
   border-radius: var(--radius-xl);
   background: #ffffff;
   padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .plan-card {
+    padding: 2rem;
+  }
 }
 
 .plan-card[data-featured="true"] {
@@ -886,6 +898,203 @@ button {
 }
 
 /* ============================================================
+   HERO — PHOTOGRAPHIC FIELD
+   Real merchant photography under a deep navy gradient.
+   ============================================================ */
+
+.hero-field {
+  position: relative;
+  isolation: isolate;
+  color: #fff;
+  background: #070f1e;
+  overflow: hidden;
+}
+
+.hero-field-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  transform: scale(1.03);
+}
+
+/* Deep navy wash: keeps white headings and buttons at full contrast. */
+.hero-field-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(85% 90% at 8% 0%, rgba(138, 43, 226, 0.28), transparent 58%),
+    radial-gradient(70% 85% at 92% 6%, rgba(0, 229, 255, 0.16), transparent 56%),
+    linear-gradient(to bottom, rgba(7, 15, 30, 0.85), rgba(7, 15, 30, 0.98));
+}
+
+/* Trust-stat rail under the hero copy. */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .hero-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.hero-stat {
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.75rem 0.85rem;
+  backdrop-filter: blur(10px);
+}
+
+.hero-stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stat span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Phone mockup showing a live branded storefront. */
+.phone-frame {
+  position: relative;
+  width: 100%;
+  max-width: 15rem;
+  margin-inline: auto;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #0b192c;
+  padding: 0.4rem;
+  box-shadow: 0 30px 70px -28px rgba(3, 8, 18, 0.9);
+}
+
+.phone-screen {
+  overflow: hidden;
+  border-radius: 1.65rem;
+  background: #fff;
+}
+
+.phone-notch {
+  position: absolute;
+  left: 50%;
+  top: 0.85rem;
+  z-index: 2;
+  height: 0.3rem;
+  width: 3.2rem;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: rgba(7, 15, 30, 0.55);
+}
+
+/* Checkout / WhatsApp order preview panel. */
+.checkout-card {
+  min-width: 0;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.97);
+  padding: 1rem;
+  box-shadow: 0 26px 60px -30px rgba(3, 8, 18, 0.85);
+}
+
+.checkout-row {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: #fff;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.6875rem;
+  color: var(--color-ink-soft);
+}
+
+.checkout-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-family: var(--font-display);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   GOOGLE TRANSLATE — DOUBLE-SECRETED ENGINE
+   The widget, banner, toolbars and pop-ups never surface.
+   ============================================================ */
+
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-te-gadget,
+.goog-te-gadget-simple,
+.goog-te-gadget-icon,
+.goog-te-menu-frame,
+.goog-te-menu2,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight,
+#goog-gt-tt,
+#goog-gt-vt,
+#goog-gt-,
+.skiptranslate,
+#google_translate_element,
+body > .skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+  opacity: 0 !important;
+}
+
+/* The engine otherwise pushes the whole page down by 40px. */
+body {
+  top: 0 !important;
+  position: static !important;
+  min-height: 100% !important;
+}
+
+html {
+  margin-top: 0 !important;
+}
+
+.goog-logo-link,
+.goog-te-spinner-pos {
+  display: none !important;
+}
+
+/* Keep translated text visually identical to the untranslated page. */
+font,
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* ============================================================
    RESPONSIVE SAFEGUARDS
    ============================================================ */
 
@@ -904,10 +1113,10 @@ button {
     letter-spacing: 0.2em;
   }
 
-  /* Store-builder sections breathe less on small screens. */
+  /* Store-builder cards keep comfortable padding on small screens. */
   .pillar-card,
   .plan-card {
-    padding: 1.15rem;
+    padding: 1.25rem;
   }
 
   .parent-link {

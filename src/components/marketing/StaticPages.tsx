@@ -67,8 +67,8 @@ export function FeaturesPage() {
         </div>
       </PageHero>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-20">
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+        <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {featureData.map(([Icon, title, text]) => (
             <article key={title} className="pillar-card">
               <div className="pillar-icon">
@@ -81,7 +81,7 @@ export function FeaturesPage() {
         </div>
       </section>
 
-      <section className="canvas-band border-y border-border px-4 py-16 sm:px-5 sm:py-20">
+      <section className="canvas-band border-y border-border px-4 py-16 sm:px-6 sm:py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
           <div className="min-w-0">
             <Badge>BUILT FOR YOUR BUSINESS</Badge>
@@ -145,13 +145,13 @@ export function PricingPage() {
             onClick={() => setAnnual(true)}
             aria-pressed={annual}
           >
-            Annual · save 20%
+            Yearly · save 20%
           </button>
         </div>
       </PageHero>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-20">
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-3">
           {plans.map((plan) => (
             <article key={plan.name} className="plan-card" data-featured={Boolean(plan.popular)}>
               <div className="flex items-start justify-between gap-3">
@@ -193,16 +193,16 @@ export function PricingPage() {
         </div>
 
         {/* Comparison strip — horizontal scroll on small screens */}
-        <div className="mt-12">
+        <div className="mt-16">
           <h2 className="text-xl font-semibold sm:text-2xl">Compare plan limits</h2>
           <div className="scroll-x mt-5 rounded-xl border border-border bg-card">
             <table className="data-table min-w-[560px]">
               <thead>
                 <tr>
                   <th>Feature</th>
+                  <th>Free</th>
                   <th>Starter</th>
-                  <th>Pro</th>
-                  <th>Enterprise</th>
+                  <th>Growth</th>
                 </tr>
               </thead>
               <tbody>
@@ -247,7 +247,7 @@ const faqs = [
   ],
   [
     "How do customers pay me?",
-    "Starter and Pro stores accept Naira by card, bank transfer and USSD, plus one-tap WhatsApp orders. Enterprise stores can also price and accept USD and GBP by card.",
+    "Every store accepts Naira by card, bank transfer and USSD, plus one-tap WhatsApp orders. Growth stores can also price and accept USD and GBP by card.",
   ],
   [
     "How does delivery pricing work?",
@@ -259,18 +259,18 @@ const faqs = [
   ],
   [
     "Can I use my own domain?",
-    "Custom domain configuration is available on the Enterprise plan. Every plan includes an ndhshopos.com store link out of the box.",
+    "Custom domain configuration is available on the Growth plan. Every plan, including Free, includes an ndhshopos.com store link out of the box.",
   ],
   [
     "What happens after my free trial?",
-    "You pick the plan that fits your catalogue. Nothing is charged until the 14-day trial ends, and you keep your store, products and settings either way.",
+    "You pick the plan that fits your catalogue. Nothing is charged until the trial ends, and you keep your store, products and settings either way.",
   ],
 ];
 
 export function FAQ() {
   const [open, setOpen] = useState(0);
   return (
-    <section className="canvas-band border-y border-border px-4 py-16 sm:px-5 sm:py-20">
+    <section className="canvas-band border-y border-border px-4 py-16 sm:px-6 sm:py-24">
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow text-center">Questions, answered</p>
         <h2 className="mt-3 text-center text-2xl font-semibold sm:text-4xl">Frequently asked questions</h2>
