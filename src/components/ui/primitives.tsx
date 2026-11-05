@@ -1,9 +1,10 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 
-export function Button({ className = "", ...p }: ButtonHTMLAttributes<HTMLButtonElement>) {
+export function Button({ className = "", variant = "primary", ...p }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "ghost" | "outline" }) {
+  const appearance = variant === "ghost" ? "bg-transparent text-foreground hover:bg-surface" : variant === "outline" ? "border border-border bg-card text-foreground hover:bg-surface" : "bg-primary text-primary-foreground hover:bg-navy-2";
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-navy-2 hover:shadow-lg disabled:opacity-50 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold disabled:opacity-50 ${appearance} ${className}`}
       {...p}
     />
   );
