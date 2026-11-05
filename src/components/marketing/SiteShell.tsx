@@ -7,12 +7,12 @@ import {
   Mail,
   Menu,
   Phone,
-  Search,
   ShoppingBag,
   Store,
   X,
 } from "lucide-react";
 import { EstStoreLockup, GatewayMark } from "@/components/brand/GatewayMark";
+import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { brand } from "@/lib/brand";
 import { getAuthState } from "@/lib/auth";
 import { useCartBadge } from "@/lib/usePersistentCart";
@@ -34,41 +34,19 @@ export function Logo() {
 /* ------------------------------------------------------------------ */
 
 /**
- * Quiet store-directory search. Opens the merchant directory (/catalog),
- * which is a discovery surface — not the platform's primary purpose.
- */
-function SearchBox({ className = "", autoFocus = false }: { className?: string; autoFocus?: boolean }) {
-  const [term, setTerm] = useState("");
-  const submit = (event: FormEvent) => {
-    event.preventDefault();
-    const query = term.trim();
-    window.location.href = query ? `/catalog?q=${encodeURIComponent(query)}` : "/catalog";
-  };
-  return (
-    <form onSubmit={submit} role="search" className={`relative ${className}`}>
-      <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-      <input
-        value={term}
-        onChange={(event) => setTerm(event.target.value)}
-        autoFocus={autoFocus}
-        placeholder="Find a store"
-        aria-label="Search stores powered by NDH ShopOS"
-        className="field h-10 rounded-full pl-10 pr-4"
-      />
-    </form>
-  );
-}
-
-/**
  * Primary SaaS navigation. The merchant directory (/catalog) is included as a
  * secondary "Discover stores" link — never the main focus of the header.
  */
 const productLinks = [
-  { to: "/features", label: "Product", hash: undefined as string | undefined },
+  { to: "/features", label: "Features", hash: undefined as string | undefined },
   { to: "/pricing", label: "Pricing", hash: undefined as string | undefined },
-  { to: "/catalog", label: "Discover stores", hash: undefined as string | undefined },
-  { to: "/help", label: "Resources", hash: undefined as string | undefined },
+  { to: "/", label: "How It Works", hash: "how-it-works" as string | undefined },
+  { to: "/track", label: "Track an Order", hash: undefined as string | undefined },
+  { to: "/help", label: "Help Center", hash: undefined as string | undefined },
 ] as const;
+
+/** Condensed set shown in the mobile drawer. */
+const drawerLinks = productLinks;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -102,8 +80,8 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <SearchBox className="ml-auto hidden w-52 xl:block" />
-          <div className="ml-auto flex items-center gap-2 xl:ml-0">
+          <div className="ml-auto flex items-center gap-2">
+            <LanguagePicker className="hidden md:inline-flex" />
             <Link
               to={signedIn ? "/dashboard" : "/signin"}
               className="hidden rounded-full px-3 py-2 text-sm font-semibold text-ink-soft hover:text-foreground lg:inline-flex"
@@ -151,20 +129,16 @@ export function SiteHeader() {
                 <X className="size-5" />
               </button>
             </div>
-            <SearchBox className="mt-8" autoFocus />
-            <nav className="mt-6 space-y-1" aria-label="Platform">
-              {productLinks.map((link, index) => (
+            <nav className="mt-8 space-y-1" aria-label="Platform">
+              {drawerLinks.map((link) => (
                 <Link
                   key={link.label}
                   to={link.to}
                   hash={link.hash}
-                  className="flex items-center justify-between border-b border-border py-4 text-xl font-semibold"
+                  className="flex items-center justify-between border-b border-border py-4 text-lg font-semibold"
                 >
-                  <span>
-                    <small className="mr-4 font-display text-xs text-muted-foreground">0{index + 1}</small>
-                    {link.label}
-                  </span>
-                  <ArrowRight className="size-5" />
+                  <span className="min-w-0 truncate">{link.label}</span>
+                  <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
                 </Link>
               ))}
               {cart.total > 0 && (
@@ -172,25 +146,25 @@ export function SiteHeader() {
                   {...(cart.lastSlug
                     ? { to: "/store/$vendorSlug" as const, params: { vendorSlug: cart.lastSlug }, search: { bag: 1 } }
                     : { to: "/catalog" as const })}
-                  className="flex items-center justify-between border-b border-border py-4 text-xl font-semibold"
+                  className="flex items-center justify-between border-b border-border py-4 text-lg font-semibold"
                 >
-                  <span>
-                    <small className="mr-4 font-display text-xs text-muted-foreground">05</small>
+                  <span className="flex min-w-0 items-center gap-2">
                     Your bag
-                    <span className="ml-3 rounded-full bg-muted px-2.5 py-1 font-display text-xs font-semibold text-foreground">
+                    <span className="rounded-full bg-muted px-2.5 py-1 font-display text-xs font-semibold text-foreground">
                       {cart.total}
                     </span>
                   </span>
-                  <ShoppingBag className="size-5" />
+                  <ShoppingBag className="size-4 shrink-0 text-muted-foreground" />
                 </Link>
               )}
             </nav>
-            <div className="mt-auto space-y-3">
+            <div className="mt-auto space-y-3 pt-8">
+              <LanguagePicker variant="drawer" />
               <Link
                 to={signedIn ? "/dashboard" : "/signin"}
                 className="flex items-center justify-center gap-2 rounded-full border border-border py-3.5 font-bold"
               >
-                <Store className="size-4" />
+                <Store className="size-4 shrink-0" />
                 {signedIn ? "Open workspace" : "Log in"}
               </Link>
               <Link
@@ -199,7 +173,7 @@ export function SiteHeader() {
               >
                 {signedIn ? "Open workspace" : "Start free trial"}
               </Link>
-              <div className="flex justify-center gap-5 pt-4 text-xs text-muted-foreground">
+              <div className="flex justify-center gap-5 pt-3 text-xs text-muted-foreground">
                 <Link to="/privacy">Privacy</Link>
                 <Link to="/terms">Terms</Link>
               </div>
