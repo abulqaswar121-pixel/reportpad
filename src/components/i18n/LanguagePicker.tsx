@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Globe } from "lucide-react";
+import { Button } from "@/components/ui/primitives";
 import {
   applyLanguage,
   currentLanguage,
@@ -108,8 +109,9 @@ export function LanguagePicker({
   const isDrawer = variant === "drawer";
 
   return (
-    <span ref={wrap} className={`relative inline-flex ${className}`}>
-      <button
+    <span ref={wrap} className={`relative ${className || "inline-flex"}`}>
+      <Button
+        variant="outline"
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-haspopup="listbox"
@@ -131,7 +133,7 @@ export function LanguagePicker({
         >
           ▾
         </span>
-      </button>
+      </Button>
 
       {open && (
         <ul
@@ -145,7 +147,8 @@ export function LanguagePicker({
             const selected = language.code === active;
             return (
               <li key={language.code}>
-                <button
+                <Button
+                  variant="ghost"
                   type="button"
                   role="option"
                   aria-selected={selected}
@@ -161,7 +164,7 @@ export function LanguagePicker({
                     </span>
                   </span>
                   {selected && <Check className="size-4 shrink-0" />}
-                </button>
+                </Button>
               </li>
             );
           })}

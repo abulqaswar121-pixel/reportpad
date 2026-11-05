@@ -16,6 +16,7 @@ import { LanguagePicker } from "@/components/i18n/LanguagePicker";
 import { brand } from "@/lib/brand";
 import { getAuthState } from "@/lib/auth";
 import { useCartBadge } from "@/lib/usePersistentCart";
+import { Button } from "@/components/ui/primitives";
 
 /* ------------------------------------------------------------------ */
 /* Brand                                                               */
@@ -24,7 +25,7 @@ import { useCartBadge } from "@/lib/usePersistentCart";
 export function Logo() {
   return (
     <Link to="/" className="flex min-w-0 items-center" aria-label={`${brand.name} home`}>
-      <EstStoreLockup size={38} />
+      <EstStoreLockup size={32} showFamily={false} />
     </Link>
   );
 }
@@ -40,9 +41,7 @@ export function Logo() {
 const productLinks = [
   { to: "/features", label: "Features", hash: undefined as string | undefined },
   { to: "/pricing", label: "Pricing", hash: undefined as string | undefined },
-  { to: "/", label: "How It Works", hash: "how-it-works" as string | undefined },
-  { to: "/track", label: "Track an Order", hash: undefined as string | undefined },
-  { to: "/help", label: "Help Center", hash: undefined as string | undefined },
+  { to: "/", label: "How it works", hash: "how-it-works" as string | undefined },
 ] as const;
 
 /** Condensed set shown in the mobile drawer. */
@@ -66,7 +65,7 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-card/92 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:h-[4.5rem] sm:px-5">
+        <div className="site-header-inner">
           <Logo />
           <nav className="ml-5 hidden items-center gap-5 lg:flex xl:gap-6" aria-label="Platform">
             {productLinks.map((link) => (
@@ -80,7 +79,7 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="site-header-actions">
             <LanguagePicker className="hidden md:inline-flex" />
             <Link
               to={signedIn ? "/dashboard" : "/signin"}
@@ -90,44 +89,48 @@ export function SiteHeader() {
             </Link>
             <Link
               to={signedIn ? "/dashboard" : "/signup"}
-              className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground hover:bg-navy-2 sm:hidden"
+              className="header-start sm:hidden"
             >
               {signedIn ? "Workspace" : "Start free"}
             </Link>
             <Link
               to={signedIn ? "/dashboard" : "/signup"}
-              className="hidden whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-navy-2 sm:inline-flex"
+              className="header-start hidden sm:inline-flex"
             >
               {signedIn ? "Open workspace" : "Start free trial"}
             </Link>
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setOpen(true)}
               aria-label="Open navigation menu"
-              className="grid size-10 place-items-center rounded-full border border-border bg-card lg:hidden"
+              aria-expanded={open}
+              className="menu-toggle lg:hidden"
             >
               <Menu className="size-5" />
-            </button>
+            </Button>
           </div>
         </div>
       </header>
 
       {open && (
         <div className="fixed inset-0 z-[100] lg:hidden">
-          <button
+          <Button
+            variant="ghost"
             aria-label="Close navigation"
             onClick={() => setOpen(false)}
-            className="absolute inset-0 bg-primary/55 backdrop-blur-sm"
+            className="drawer-backdrop"
           />
-          <aside className="animate-rise absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col bg-card p-5 shadow-2xl">
-            <div className="flex items-center justify-between">
+          <aside aria-label="Navigation menu" role="dialog" aria-modal="true" className="site-drawer">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
               <Logo />
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
-                className="grid size-11 place-items-center rounded-full bg-muted"
+                className="menu-toggle"
               >
                 <X className="size-5" />
-              </button>
+              </Button>
             </div>
             <nav className="mt-8 space-y-1" aria-label="Platform">
               {drawerLinks.map((link) => (
@@ -135,6 +138,7 @@ export function SiteHeader() {
                   key={link.label}
                   to={link.to}
                   hash={link.hash}
+                  onClick={() => setOpen(false)}
                   className="flex items-center justify-between border-b border-border py-4 text-lg font-semibold"
                 >
                   <span className="min-w-0 truncate">{link.label}</span>
@@ -158,8 +162,12 @@ export function SiteHeader() {
                 </Link>
               )}
             </nav>
+            <div className="mt-6 flex gap-6 text-sm text-muted-foreground">
+              <Link to="/track" onClick={() => setOpen(false)}>Track an order</Link>
+              <Link to="/help" onClick={() => setOpen(false)}>Get help</Link>
+            </div>
             <div className="mt-auto space-y-3 pt-8">
-              <LanguagePicker variant="drawer" />
+              <LanguagePicker variant="drawer" className="block" />
               <Link
                 to={signedIn ? "/dashboard" : "/signin"}
                 className="flex items-center justify-center gap-2 rounded-full border border-border py-3.5 font-bold"
